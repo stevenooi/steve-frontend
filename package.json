@@ -1,0 +1,19 @@
+{
+  "name": "com.summittimer.codmgr2-frontend",
+  "version": "1.0.0",
+  "description": "Code Manager Front End",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://stevenooi84@bitbucket.org/summitinnovations/com.summittimer.codmgr2-frontend.git"
+  },
+  "author": "Summit Innovations",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/summitinnovations/com.summittimer.codmgr2-frontend#readme",
+  "dependencies": {
+    "griddle-react": "^0.7.1"
+  }
+}
