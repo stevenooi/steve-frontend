@@ -2,8 +2,7 @@ import 'normalize.css/normalize.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import React, { Component } from 'react'; 
-import Header from './Header';
-import Sidebar from './Sidebar';
+import Header from './Header'; 
 import { Grid, Row, Col } from 'react-bootstrap'; 
 import AuthenticateActions from '../actions/AuthenticateActions';
 import AuthenticateStore from '../stores/AuthenticateStore';

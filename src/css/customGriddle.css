@@ -1,0 +1,46 @@
+.columnStoreBar
+{
+width:	615px;
+
+}
+
+.column40
+{
+width:	40px
+}
+
+.column150
+{
+width:	150px
+}
+
+.columnStoreCheck
+{
+	width:	38px;
+    vertical-align: text-top;
+}
+
+.alignTop
+{
+    vertical-align: text-top;
+}
+
+.storeGroup
+{
+    vertical-align: text-top;
+	width:140px;
+}
+.storeTemplate
+{
+    vertical-align: text-top;
+	width:130px;
+}
+
+.example-appear {
+   opacity: 0.01;
+}
+
+.example-appear.example-appear-active {
+   opacity: 1;
+   transition: opacity 500ms ease-in;
+}

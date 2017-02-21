@@ -74,7 +74,7 @@ AuthenticateStore.dispatchToken = AppDispatcher.register(action => {
     case AuthenticateConstants.LOGIN_USER:
 	  console.log("In AuthenticateStore - dispatchToken : " +action.username + " , " + action.password);
 	  
-	  if(action.username == "steven" && action.password == "password")
+	  if(action.username == "admin" && action.password == "password")
 	  {
 		 console.log("logins success");
 		localStorage.setItem('loggedIn', "YES"); 

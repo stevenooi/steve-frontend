@@ -1,0 +1,10 @@
+MAKE SURE THE FOLLOWING IS COMPLETED IN CREATING NEW MODULES
+------------------------------------------------------------
+i) Components created
+   - in src/components
+ii) Constants created
+   - in src/constants
+iii) Rest API created
+   - in src/utils/rest
+iv) Stores created
+   - in src/stores

@@ -1,0 +1,11 @@
+
+import keyMirror from 'keymirror';
+
+export default keyMirror({
+  TEMPLATE_RECIEVE_DATA: null, 
+  TEMPLATE_RECIEVE_DATA_SINGLE: null, 
+  TEMPLATE_RECIEVE_DATA_ERROR: null, 
+  TEMPLATE_RECIEVE_ALL_TEMPLATES: null,
+  TEMPLATE_RECIEVE_ALL_GROUPS: null,
+  TEMPLATE_SLIDE_RECIEVE_DATA_SINGLE: null
+});

@@ -68,7 +68,7 @@ class MenuComponent extends Component {
     return ( 
 		<div style={menuStyle}> 
         <Grid>
-          <Row xs={12} >
+          <Row >
 			{menuListItems}
 		  </Row>
         </Grid> 

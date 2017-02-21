@@ -15,7 +15,7 @@ class MenuListItem extends Component {
 	};
     return ( 
       <Col xs={2} style={menuStyle}> 
-		<a href={`/page${menu.id}`}>{menu.name}</a> 
+		<a href={`/${menu.path}`}>{menu.name}</a> 
       </Col> 
     );
   }
