@@ -28,27 +28,18 @@ class DeleteComponent extends Component {
 	  } 
 	  var obj = new Object();
 	  obj.id = index; 
-	  if(isDeletable == "1")
-	  {
+	   
 		  var confirmation = confirm('Are you sure you want to delete the data?');
 		  if(confirmation)
 			  GlobalActions.deleteAction(location, obj); 
-	  }
-	  else if(location == "" || location == null)
-	  {
-		  alert('Active data is locked and not deletable');
-	  }
-	  else
-	  {
-		  alert('This data cannot be deleted. Dependency on the data found');
-	  }
+	   
   } 
 
   render(){
     return (
        <img
-          style={{width: 20, height: 20,cursor: 'pointer'}}
-		  src={'images/delete-button.jpg'}  
+          style={{marginLeft:8,width: 20, height: 20,cursor: 'pointer'}}
+		  src={'images/delete1.png'}  
 		  onClick={this.deleteClick}
         />
     );

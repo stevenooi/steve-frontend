@@ -64,7 +64,7 @@ class CustomDropDown extends Component {
   
   onDrop()
   {
-	  console.log("hello");
+	  
 	  return ;
   }
   
@@ -126,8 +126,13 @@ processUpload(imageFiles)
 }
   onDropAccepted(imageFiles)
   {  
-    let validationResult = true;
-	imageFiles.map((file) => this.validateSubmit(file,imageFiles));
+   
+	if(this.props.disabled != true)
+	{
+		let validationResult = true;
+		imageFiles.map((file) => this.validateSubmit(file,imageFiles));
+	}
+    
 //	imageFiles.map((file) => this.processUpload(imageFiles));
   
   
@@ -156,30 +161,24 @@ processUpload(imageFiles)
 
   
   render(){ 
+	let dropzoneObj = "";
+	let defaultText = "Drop an image or click to select a file to upload";
+	if(this.props.disabled != null)
+	{
+		defaultText = "No image found";
+	}
+	let contentDiv = <div style={{height:189, marginTop:8,marginBottom:8,textAlign:"center"}}>{this.props.defaultImg != null && this.props.defaultImg != "" && this.state.imageFiles.length <= 0?<img src={ApiSettings.NODE_SERVER + "/api/retrieveimage/" + this.props.defaultImg} style={{height:135,marginTop:18,marginBottom:18}} /> : null }{(this.props.defaultImg == null || this.props.defaultImg == "") && this.state.imageFiles.length <= 0 ? <p style={{ paddingTop: 80,width:195,textAlign:"center",textAlignVertical:"center"}}>  {defaultText} </p> : null}{	this.state.imageFiles.length > 0 ? <div><div>{this.state.imageFiles.map((file) => <img src={file.preview} style={{height:135,marginTop:18,marginBottom:18}} /> )}</div><div className="progress"><div className="progress-bar progress-bar-success progress-bar-striped active" style={{width:this.state.progressPercentage + "%"}}>{this.state.progressPercentage}%</div></div> </div> : null}</div> 	;
+	if(this.props.disabled != null)
+	{
+		dropzoneObj = contentDiv
+	}
+	else
+	{
+		dropzoneObj = <Dropzone multiple={false} accept="image/jpeg" onDropAccepted={this.onDropAccepted} onDropRejected={this.onDropRejected} onDrop={this.onDrop} maxSize={1000 * 1024}>{contentDiv}</Dropzone>
+	}
+	//	dropzoneObj = <Dropzone multiple={false} accept="image/jpeg" onDropAccepted={this.onDropAccepted} onDropRejected={this.onDropRejected} onDrop={this.onDrop} maxSize={1000 * 1024}>{contentDiv}</Dropzone>
 	return ( 
-	 
-		<Dropzone
-			multiple={false}
-			accept="image/jpeg"
-			onDropAccepted={this.onDropAccepted}
-			onDropRejected={this.onDropRejected}
-			onDrop={this.onDrop}
-			maxSize={1000 * 1024}
-		>
-			<div style={{height:175, marginTop:8,marginBottom:8,textAlign:"center"}}>
-				{this.props.defaultImg != null && this.props.defaultImg != "" && this.state.imageFiles.length <= 0?
-				<img src={ApiSettings.NODE_SERVER + "/api/retrieveimage/" + this.props.defaultImg} style={{height:135,marginTop:18,marginBottom:18}} /> : null }
-				
-				{(this.props.defaultImg == null || this.props.defaultImg == "") && this.state.imageFiles.length <= 0 ? <p style={{ marginTop: 80,width:195,textAlign:"center",textAlignVertical:"center"}}>  Drop an image or click to select a file to upload </p> : null}
-					{					
-					this.state.imageFiles.length > 0 ? <div> 
-				<div>{this.state.imageFiles.map((file) => <img src={file.preview} style={{height:135,marginTop:18,marginBottom:18}} /> )}</div>
-				<div className="progress">
-				<div className="progress-bar progress-bar-success progress-bar-striped active" style={{width:this.state.progressPercentage + "%"}}>{this.state.progressPercentage}%</div></div> 
-				</div> : null}
-			</div> 	
-		</Dropzone>
-
+		<div >{dropzoneObj}</div>
     );
   }
 }

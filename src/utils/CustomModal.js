@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
 import ApiSettings from '../config/apiSettings';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'; 
 
 export default class CustomModal extends Component {
     constructor(props) {
@@ -66,7 +67,7 @@ export default class CustomModal extends Component {
 			borderRadius: '5px',
 			bottom: 'auto',
 			height: heightPx,  // set height 
-			left: '10%',
+			left: '20%',
 			padding: '2rem',
 			position: 'fixed',
 			right: 'auto',
@@ -98,6 +99,20 @@ export default class CustomModal extends Component {
 				img: "../images/noimage.png"
 			} 
 		}
+		let title = this.props.title;
+		if(title != "" || title != null)
+		{  
+			if(title.length < 12)
+			{
+				var extraChar = 12 - title.length;
+				extraChar = extraChar / 2;
+				var extraCharWidth = extraChar * 4.5;
+				for(var i=0;i< extraChar;i++)
+				{
+			title = <div style={{paddingLeft:extraCharWidth}}>{title}</div>;
+				}
+			}
+		}
 		
         return (
             <section>
@@ -109,11 +124,14 @@ export default class CustomModal extends Component {
 					onRequestClose={this.closeModal}
 					style={style} 
 					> 	
-						<div className="modal-body" style={{textAlign:"center"}}>
-							<img ref='content'src={this.state.img} style={{height:this.windowHeight ,marginTop:0,marginBottom:0}} /> 
+						<div className="modal-body" style={{textAlign:"center",top:10}}>
+							<img ref='content'src={this.state.img} style={{height:this.windowHeight ,top:0,marginTop:0,marginBottom:0}} /> 
 						</div>
-					 
+						 
 						<img src="../images/erroricon.png" style={{width:25,cursor:'pointer',position:'absolute',left:5,top:5}} onClick={this.closeModal} />  
+						<ReactCSSTransitionGroup transitionName = 'modal' transitionAppear = {true} transitonEnter = {false} transitionLeave = {false}>
+							<div style={{position:'absolute',top:0,left:"calc((100% /2 - 150px) )",fontSize:70}}>{title}</div>
+						</ReactCSSTransitionGroup>
 					</Modal>
  
             </section>

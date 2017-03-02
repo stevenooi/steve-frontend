@@ -33,11 +33,6 @@ modify cfg/default.js, add the lines below
   test: /\.(png|woff|woff2|eot|ttf|svg)$/,
   loader: 'url-loader?limit=8192'
 },
-npm install flux react-router bootstrap react-bootstrap keymirror superagent
-
-
-until CREATE THE CONTACTS API
-
-TO BE DONE
-----------
-pass state from router
+npm install flux react-router bootstrap react-bootstrap keymirror superagent --save
+npm install webpack-dev-server webpack bower-webpack-plugin --save
+ 

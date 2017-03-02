@@ -12,13 +12,13 @@ export default {
       .getData('api/progress')
       .then(data => {
         AppDispatcher.dispatch({	
-          actionType: ProgressConstants.RECIEVE_DATA,
+          actionType: ProgressConstants.PROGRESS_RECIEVE_DATA,
           data1: data
         });
       })
       .catch(message => {
         AppDispatcher.dispatch({
-          actionType: ProgressConstants.RECIEVE_DATA_ERROR,
+          actionType: ProgressConstants.PROGRESS_RECIEVE_DATA_ERROR,
           message: message
         });
       });
@@ -28,13 +28,13 @@ export default {
       .getData('api/templateactive')
       .then(data => {
         AppDispatcher.dispatch({	
-          actionType: ProgressConstants.RECIEVE_DATA_ALL_TEMPLATES,
+          actionType: ProgressConstants.PROGRESS_RECIEVE_DATA_ALL_TEMPLATES,
           data: data
         });
       })
       .catch(message => {
         AppDispatcher.dispatch({
-          actionType: ProgressConstants.RECIEVE_DATA_ERROR,
+          actionType: ProgressConstants.PROGRESS_RECIEVE_DATA_ERROR,
           message: message
         });
       });
@@ -45,13 +45,13 @@ export default {
       .then(data => {   
 	  CustomRedirect.redirect("/progress"); 
 	  AppDispatcher.dispatch({	
-          actionType: ProgressConstants.RECIEVE_DATA
+          actionType: ProgressConstants.PROGRESS_RECIEVE_DATA
         });
       })
       .catch(message => {
 		alert(message);
 		AppDispatcher.dispatch({
-          actionType: ProgressConstants.RECIEVE_DATA_ERROR,
+          actionType: ProgressConstants.PROGRESS_RECIEVE_DATA_ERROR,
           message: message
         });
       });

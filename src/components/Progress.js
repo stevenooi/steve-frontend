@@ -8,8 +8,7 @@ import LinkComponent from '../utils/griddle/LinkComponent';
 import HeaderComponentInputFilter from '../utils/griddle/HeaderComponentInputFilter';
 import HeaderComponentDropDownFilter from '../utils/griddle/HeaderComponentDropDownFilter';
 import HeaderComponentDefault from '../utils/griddle/HeaderComponentDefault';
-import EditComponent from '../utils/griddle/EditComponent';
-import DeleteComponent from '../utils/griddle/DeleteComponent';
+import EditComponent from '../utils/griddle/EditComponent'; 
 import StoreBarComponent from '../utils/griddle/StoreBarComponent';
 import StoreGroupComponent from '../utils/griddle/StoreGroupComponent';
 import CheckboxComponent from '../utils/griddle/CheckboxComponent';
@@ -22,10 +21,10 @@ import Griddle from 'griddle-react';
 
 
 class ProgressComponent extends Component {
-
+  
   constructor() {
     super();
-	this.noDataMessage = "Loading...";
+	this.noDataMessage = <div className="loader" style={{marginTop:20,marginBottom:20}}></div>;
     // For our initial state, we just want
     // an empty array of contacts
     this.state = {
@@ -46,7 +45,7 @@ class ProgressComponent extends Component {
 	this.selectedCheckbox = [];
 	this.params = {};
 	this.clickCheckBox = true;
-	this.templateId = "";
+	this.templateId = ""; 
   }
 
   setPreviousData(data, count) {
@@ -199,19 +198,14 @@ class ProgressComponent extends Component {
   }
   
   onChange() {
+	  
     this.setState({
       data1: ProgressStore.getData1(),
 	  dataAllTemplates: ProgressStore.getDataAllTemplates()
     });
+	console.log(JSON.stringify("dataAllTemplates:"+ this.state.dataAllTemplates));
 	this.noDataMessage = "No data could be found.";
-	/*
-	let dataListItems;
-	if(this.state.data1 != null)
-	{
-		this.state.data1.map((data,i) => this.setPreviousData(data,i));
-	//	this.state.data1.map((data) => console.log("after change progress:" + data.progress));
-		
-	}*/
+	
   }
 
 	 
@@ -285,6 +279,7 @@ this.columnMeta = [
 				  </td></tr>
 				  </tbody>
 				  </table>
+			
 			</div>
 			 
 			<div style={{marginBottom:15, width:950}}>

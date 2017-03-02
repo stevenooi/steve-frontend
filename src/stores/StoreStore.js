@@ -9,6 +9,11 @@ let _data1 = [];
 let _dataSingle = [];
 let _data2 = [];  
 let _data3 = [];    
+let _allBrandData = [];
+
+function setAllBrandData(data) {
+  _allBrandData = data;
+}
 
 function setData1(data) {
   _data1 = data;
@@ -54,6 +59,10 @@ class StoreStoreClass extends EventEmitter {
   getDataSingle() {
     return _dataSingle;
   }  
+  getAllBrands () {
+    return _allBrandData;
+  }  
+  
   //End Set the return variables
 
 }
@@ -63,7 +72,7 @@ const StoreStore = new StoreStoreClass();
 StoreStore.dispatchToken = AppDispatcher.register(action => { 
  
   switch(action.actionType) {
-    case StoreConstants.RECIEVE_DATA:
+    case StoreConstants.STORE_RECIEVE_DATA:
 	  setData1(action.data1);
       StoreStore.emitChange();
       break
@@ -83,8 +92,13 @@ StoreStore.dispatchToken = AppDispatcher.register(action => {
 	  setDataSingle(action.data1); 
       StoreStore.emitChange();
       break
+    case StoreConstants.STORE_RECIEVE_DATA_ALL_BRAND:
+	  console.log("action.data1:" + action.allBrandData);
+	  setAllBrandData(action.allBrandData); 
+      StoreStore.emitChange();
+      break
  
-    case StoreConstants.RECIEVE_DATA_ERROR:
+    case StoreConstants.STORE_RECIEVE_DATA_ERROR:
       alert(action.message);
       StoreStore.emitChange();
       break

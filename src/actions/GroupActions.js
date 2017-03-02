@@ -12,13 +12,13 @@ export default {
       .getData('api/group')
       .then(data => {
         AppDispatcher.dispatch({	
-          actionType: GroupConstants.RECIEVE_DATA,
+          actionType: GroupConstants.GROUP_RECIEVE_DATA,
           data1: data
         });
       })
       .catch(message => {
         AppDispatcher.dispatch({
-          actionType: GroupConstants.RECIEVE_DATA_ERROR,
+          actionType: GroupConstants.GROUP_RECIEVE_DATA_ERROR,
           message: message
         });
       });
@@ -34,7 +34,7 @@ export default {
       })
       .catch(message => {
         AppDispatcher.dispatch({
-          actionType: GroupConstants.RECIEVE_DATA_ERROR,
+          actionType: GroupConstants.GROUP_RECIEVE_DATA_ERROR,
           message: message
         });
       });
@@ -50,7 +50,7 @@ export default {
       })
       .catch(message => {
         AppDispatcher.dispatch({
-          actionType: GroupConstants.RECIEVE_DATA_ERROR,
+          actionType: GroupConstants.GROUP_RECIEVE_DATA_ERROR,
           message: message
         });
       });
@@ -66,7 +66,7 @@ export default {
       })
       .catch(message => {
         AppDispatcher.dispatch({
-          actionType: GroupConstants.RECIEVE_DATA_ERROR,
+          actionType: GroupConstants.GROUP_RECIEVE_DATA_ERROR,
           message: message
         });
       });
@@ -77,13 +77,13 @@ export default {
       .then(data => {   
 	  CustomRedirect.redirect("/group"); 
 	  AppDispatcher.dispatch({	
-          actionType: GroupConstants.RECIEVE_DATA
+          actionType: GroupConstants.GROUP_RECIEVE_DATA
         });
       })
       .catch(message => {
 		alert(message);
 		AppDispatcher.dispatch({
-          actionType: GroupConstants.RECIEVE_DATA_ERROR,
+          actionType: GroupConstants.GROUP_RECIEVE_DATA_ERROR,
           message: message
         });
       });
@@ -99,7 +99,7 @@ export default {
       })
       .catch(message => {
         AppDispatcher.dispatch({
-          actionType: GroupConstants.RECIEVE_DATA_ERROR,
+          actionType: GroupConstants.GROUP_RECIEVE_DATA_ERROR,
           message: message
         });
       });
@@ -110,13 +110,13 @@ export default {
       .then(data => {  
 	  CustomRedirect.redirect("/group");
 	  AppDispatcher.dispatch({	
-          actionType: GroupConstants.RECIEVE_DATA_SINGLE
+          actionType: GroupConstants.GROUP_RECIEVE_DATA_SINGLE
         });
       })
       .catch(message => {
 		alert(message);
 		AppDispatcher.dispatch({
-          actionType: GroupConstants.RECIEVE_DATA_ERROR,
+          actionType: GroupConstants.GROUP_RECIEVE_DATA_ERROR,
           message: message
         });
       });

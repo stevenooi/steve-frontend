@@ -101,7 +101,7 @@ class TemplateFormComponent extends Component {
     });   
 	
 	//set value if data is available
-	if(this.state.data1[0] != null)
+	if(this.state.data1 != null && this.state.data1[0] != null)
 	{
 		this.setState({  
 		  templateDescription: this.state.data1[0].description, 
@@ -123,7 +123,7 @@ class TemplateFormComponent extends Component {
 	}
 	
 	//set default dropdown value to first data if no data is available
-	if(this.state.data2[0] != null && this.state.data1[0] == null)
+	if(this.state.data2!= null && this.state.data2[0] != null && this.state.data1[0] == null)
 	{
 		this.setState({
 		  templateId: this.state.data2[0].id 
@@ -131,13 +131,13 @@ class TemplateFormComponent extends Component {
 	}	
 	
 	
-	console.log("this.state.data3:" + this.state.data3);
+	//console.log("this.state.data3:" + this.state.data3);
 	var tempArray = [];
 	let tempID = "";
 	let tempName = "";
 	this.state.data3.map(file => {
-		console.log("hereeeeeeeeeeeeeeeeeeeee," + file.id);
-		console.log("hereeeeeeeeeeeeeeeeeeeee," + file.name);
+		//console.log("hereeeeeeeeeeeeeeeeeeeee," + file.id);
+		//console.log("hereeeeeeeeeeeeeeeeeeeee," + file.name);
 		tempID += file.id + ",";
 		tempName += file.name + ","; 
 		tempArray.push(file.name); 
@@ -168,6 +168,12 @@ class TemplateFormComponent extends Component {
 		TemplateActions.getDataById(this.props.location.query.cloneid); 		
 		TemplateActions.getTemplateSlide(this.props.location.query.cloneid);
 	}
+	else if(this.props.location.query.viewid != null)
+	{
+		TemplateActions.getDataById(this.props.location.query.viewid); 		
+		TemplateActions.getTemplateSlide(this.props.location.query.viewid);
+	}
+	
 	//TemplateActions.getAllGroups(); 
   }
 
@@ -270,6 +276,9 @@ class TemplateFormComponent extends Component {
   }
   
   handleClick1(event) {   
+  
+	console.log("slideImg:" + JSON.stringify(this.state.slideImg));
+	
 	 if(this.validateForm()){
 			this.addParams("name",this.state.templateName);
 			this.addParams("description",this.state.templateDescription);
@@ -282,17 +291,18 @@ class TemplateFormComponent extends Component {
 			this.addParams("slideImg",this.state.slideImg);
 			this.addParams("status",TemplateKeyConstants.ACTIVE);
 			
-			if(this.state.data1[0]!= null && this.state.data1[0].name != null)
-			{  
+			if(this.props.location.query.id != null)
+			{   
 				this.addParams("id",this.state.data1[0].id); 
 				//alert("Edit function is not available yet ! ");
 				TemplateActions.editData(JSON.parse(JSON.stringify(this.params)));
 			}
 			else
-			{
+			{ 
 				TemplateActions.addData(JSON.parse(JSON.stringify(this.params)));
 			} 
 	 } 
+	 
   }
   
   handleClick2(event) {   
@@ -307,7 +317,7 @@ class TemplateFormComponent extends Component {
 			this.addParams("slideImg",this.state.slideImg);
 			this.addParams("status",TemplateKeyConstants.IN_PROGRESS);
 			
-			if(this.state.data1[0]!= null && this.state.data1[0].name != null)
+			if(this.props.location.query.id != null)
 			{  
 				this.addParams("id",this.state.data1[0].id); 
 				//alert("Edit function is not available yet ! ");
@@ -324,22 +334,42 @@ class TemplateFormComponent extends Component {
   }
 
   render() { 
+
+  let headerTitle = "";
+  let buttonList = "";
+  if(this.props.location.query.viewid == null || this.props.location.query.viewid == "")
+  {
+	buttonList = <div><input type="button" className="btn btn-primary" value="Activate" onClick={this.handleClick1} /><input type="button" className="btn btn-primary" style={{marginLeft:20}} value="Save" onClick={this.handleClick2} /></div>;
+  }
+  if(this.props.location.query.id != null)
+  {
+	  headerTitle = "Update Template Details";
+  }
+  else if(this.props.location.query.viewid != null)
+  {
+	  headerTitle = "View Template Details";
+  }
+  else
+  { 
+	  headerTitle = "Create New Template";
+  }
+
     return (
 	<div >
 		
 		<Grid style={{marginBottom:20}}> 
 		<Row>
-	  <h2>{this.props.location.query.id != null ? "Update Template Details" :  "Create New Template"}</h2>
+	  <h2>{headerTitle}</h2>
 	  </Row>
 	  <form ref="mainForm">
 	
 		<div className="form-group">
 	    <Row>	
 		  {this.props.location.query.id != null ? (		  
-			  <div class="form-group row">
-				<label class="col-sm-2 col-form-label">ID</label>
-				<div class="col-sm-10">
-				  <p class="form-control-static">{this.props.location.query.id} </p>
+			  <div className="form-group row">
+				<label className="col-sm-2 col-form-label">ID</label>
+				<div className="col-sm-10" style={{marginTop:-8}}>
+				  <p className="form-control-static">{this.props.location.query.id} </p>
 				</div>
 			  </div>
 		  ) :  ""}
@@ -359,19 +389,19 @@ class TemplateFormComponent extends Component {
 			<Row style={{marginBottom:15}}>
 				<Col xs={3} >
 					<label >Welcome: </label>
-					<CustomDropZone picId="welcome" onHandleUpload={this.handleUpload} defaultImg={this.state.welcome}/>
+					<CustomDropZone picId="welcome" disabled={this.props.location.query.viewid} onHandleUpload={this.handleUpload} defaultImg={this.state.welcome}/>
 					<CustomModal img={this.state.welcome} title="Welcome" />
 				</Col>
 				
 				<Col xs={3}>
 					<label >Thank You:</label>
-					<CustomDropZone picId="thankyou" onHandleUpload={this.handleUpload} defaultImg={this.state.thankyou}/>
+					<CustomDropZone picId="thankyou" disabled={this.props.location.query.viewid} onHandleUpload={this.handleUpload} defaultImg={this.state.thankyou}/>
 					<CustomModal img={this.state.thankyou} title="Thank You" />
 				</Col>
 				
 				<Col xs={3}>
 					<label >Logo:</label>
-					<CustomDropZone picId="logo" onHandleUpload={this.handleUpload} defaultImg={this.state.logo}/>
+					<CustomDropZone picId="logo" disabled={this.props.location.query.viewid} onHandleUpload={this.handleUpload} defaultImg={this.state.logo}/>
 					<CustomModal img={this.state.logo} title="Logo" />
 				</Col>
 				 
@@ -379,28 +409,27 @@ class TemplateFormComponent extends Component {
 			<Row style={{marginBottom:15}}>
 				<Col xs={3}>
 					<label >Default 1:</label>
-					<CustomDropZone picId="default1" onHandleUpload={this.handleUpload} defaultImg={this.state.default1}/>
+					<CustomDropZone picId="default1" disabled={this.props.location.query.viewid} onHandleUpload={this.handleUpload} defaultImg={this.state.default1}/>
 					<CustomModal img={this.state.default1} title="Default 1" />
 				</Col>
 				<Col xs={3}>				
 					<label >Default 2:</label>
-					<CustomDropZone picId="default2" onHandleUpload={this.handleUpload} defaultImg={this.state.default2}/>
+					<CustomDropZone picId="default2" disabled={this.props.location.query.viewid} onHandleUpload={this.handleUpload} defaultImg={this.state.default2}/>
 					<CustomModal img={this.state.default2} title="Default 2" />
 				</Col>
 				<Col xs={3}>
 					<label >Order Screen: (Non-Editable)</label>
-					<CustomModalOrderScreen imgLogo={this.state.logo} imgWelcome={this.state.welcome} imgThankYou={this.state.thankyou} title="Default 2" />
+					<CustomModalOrderScreen imgLogo={this.state.logo} imgWelcome={this.state.default1} imgThankYou={this.state.default2} title="Order Screen" />
 				</Col>
 			</Row>
 			<Row style={{marginBottom:15}}>
 				<label >Slides Images:</label>
-				<CustomDropZoneMultiple ref="dropZoneMultiple" onHandleUpload={this.handleUpload2} defaultImg={this.state.data3} newDataToken={this.props.location.query.id == null} />
+				<CustomDropZoneMultiple ref="dropZoneMultiple" disabled={this.props.location.query.viewid} onHandleUpload={this.handleUpload2} defaultImg={this.state.data3} newDataToken={(this.props.location.query.id == null && this.props.location.query.cloneid == null && this.props.location.query.viewid == null)} />
 				<CustomModalSlider img={this.state.slideImg} title="Default 1" />
 			</Row>
 			<Row>
-				<input type="button" className="btn btn-primary" value="Submit" onClick={this.handleClick1} />
-				<input type="button" className="btn btn-primary" style={{marginLeft:20}} value="Save" onClick={this.handleClick2} />				
-				
+			
+			{buttonList}
 			</Row>
 			
 			</div>   	

@@ -12,13 +12,13 @@ export default {
       .getData('api/template')
       .then(data => {
         AppDispatcher.dispatch({	
-          actionType: TemplateConstants.RECIEVE_DATA,
+          actionType: TemplateConstants.TEMPLATE_RECIEVE_DATA,
           data1: data
         });
       })
       .catch(message => {
         AppDispatcher.dispatch({
-          actionType: TemplateConstants.RECIEVE_DATA_ERROR,
+          actionType: TemplateConstants.TEMPLATE_RECIEVE_DATA_ERROR,
           message: message
         });
       });
@@ -34,7 +34,7 @@ export default {
       })
       .catch(message => {
         AppDispatcher.dispatch({
-          actionType: TemplateConstants.RECIEVE_DATA_ERROR,
+          actionType: TemplateConstants.TEMPLATE_RECIEVE_DATA_ERROR,
           message: message
         });
       });
@@ -45,13 +45,13 @@ export default {
       .then(data => {   
 	  CustomRedirect.redirect("/template"); 
 	  AppDispatcher.dispatch({	
-          actionType: TemplateConstants.RECIEVE_DATA
+          actionType: TemplateConstants.TEMPLATE_RECIEVE_DATA
         });
       })
       .catch(message => {
 		alert(message);
 		AppDispatcher.dispatch({
-          actionType: TemplateConstants.RECIEVE_DATA_ERROR,
+          actionType: TemplateConstants.TEMPLATE_RECIEVE_DATA_ERROR,
           message: message
         });
       });
@@ -68,7 +68,7 @@ export default {
       })
       .catch(message => {
         AppDispatcher.dispatch({
-          actionType: TemplateConstants.RECIEVE_DATA_ERROR,
+          actionType: TemplateConstants.TEMPLATE_RECIEVE_DATA_ERROR,
           message: message
         });
       });
@@ -84,7 +84,7 @@ export default {
       })
       .catch(message => {
         AppDispatcher.dispatch({
-          actionType: TemplateConstants.RECIEVE_DATA_ERROR,
+          actionType: TemplateConstants.TEMPLATE_RECIEVE_DATA_ERROR,
           message: message
         });
       });
@@ -95,13 +95,13 @@ export default {
       .then(data => {  
 	  CustomRedirect.redirect("/template");
 	  AppDispatcher.dispatch({	
-          actionType: TemplateConstants.RECIEVE_DATA_SINGLE
+          actionType: TemplateConstants.TEMPLATE_RECIEVE_DATA_SINGLE
         });
       })
       .catch(message => {
 		alert(message);
 		AppDispatcher.dispatch({
-          actionType: TemplateConstants.RECIEVE_DATA_ERROR,
+          actionType: TemplateConstants.TEMPLATE_RECIEVE_DATA_ERROR,
           message: message
         });
       });

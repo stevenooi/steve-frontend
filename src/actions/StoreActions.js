@@ -12,13 +12,13 @@ export default {
       .getData('api/store')
       .then(data => {
         AppDispatcher.dispatch({	
-          actionType: StoreConstants.RECIEVE_DATA,
+          actionType: StoreConstants.STORE_RECIEVE_DATA,
           data1: data
         });
       })
       .catch(message => {
         AppDispatcher.dispatch({
-          actionType: StoreConstants.RECIEVE_DATA_ERROR,
+          actionType: StoreConstants.STORE_RECIEVE_DATA_ERROR,
           message: message
         });
       });
@@ -34,7 +34,7 @@ export default {
       })
       .catch(message => {
         AppDispatcher.dispatch({
-          actionType: StoreConstants.RECIEVE_DATA_ERROR,
+          actionType: StoreConstants.STORE_RECIEVE_DATA_ERROR,
           message: message
         });
       });
@@ -50,7 +50,23 @@ export default {
       })
       .catch(message => {
         AppDispatcher.dispatch({
-          actionType: StoreConstants.RECIEVE_DATA_ERROR,
+          actionType: StoreConstants.STORE_RECIEVE_DATA_ERROR,
+          message: message
+        });
+      });
+  },
+  getAllBrands: () => {
+    StoreAPI
+      .getData('api/brand')
+      .then(data => {
+        AppDispatcher.dispatch({	
+          actionType: StoreConstants.STORE_RECIEVE_DATA_ALL_BRAND,
+          allBrandData: data
+        });
+      })
+      .catch(message => {
+        AppDispatcher.dispatch({
+          actionType: StoreConstants.STORE_RECIEVE_DATA_ERROR,
           message: message
         });
       });
@@ -61,13 +77,13 @@ export default {
       .then(data => {   
 	  CustomRedirect.redirect("/store"); 
 	  AppDispatcher.dispatch({	
-          actionType: StoreConstants.RECIEVE_DATA
+          actionType: StoreConstants.STORE_RECIEVE_DATA
         });
       })
       .catch(message => {
 		alert(message);
 		AppDispatcher.dispatch({
-          actionType: StoreConstants.RECIEVE_DATA_ERROR,
+          actionType: StoreConstants.STORE_RECIEVE_DATA_ERROR,
           message: message
         });
       });
@@ -83,7 +99,7 @@ export default {
       })
       .catch(message => {
         AppDispatcher.dispatch({
-          actionType: StoreConstants.RECIEVE_DATA_ERROR,
+          actionType: StoreConstants.STORE_RECIEVE_DATA_ERROR,
           message: message
         });
       });
@@ -94,13 +110,13 @@ export default {
       .then(data => {  
 	  CustomRedirect.redirect("/store");
 	  AppDispatcher.dispatch({	
-          actionType: StoreConstants.RECIEVE_DATA_SINGLE
+          actionType: StoreConstants.STORE_RECIEVE_DATA_SINGLE
         });
       })
       .catch(message => {
 		alert(message);
 		AppDispatcher.dispatch({
-          actionType: StoreConstants.RECIEVE_DATA_ERROR,
+          actionType: StoreConstants.STORE_RECIEVE_DATA_ERROR,
           message: message
         });
       });

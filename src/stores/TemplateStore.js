@@ -63,7 +63,7 @@ const TemplateStore = new TemplateStoreClass();
 TemplateStore.dispatchToken = AppDispatcher.register(action => { 
  
   switch(action.actionType) {
-    case TemplateConstants.RECIEVE_DATA:
+    case TemplateConstants.TEMPLATE_RECIEVE_DATA:
 	  setData1(action.data1);
       TemplateStore.emitChange();
       break
@@ -87,7 +87,7 @@ TemplateStore.dispatchToken = AppDispatcher.register(action => {
       TemplateStore.emitChange();
       break
  
-    case TemplateConstants.RECIEVE_DATA_ERROR:
+    case TemplateConstants.TEMPLATE_RECIEVE_DATA_ERROR:
       alert(action.message);
       TemplateStore.emitChange();
       break

@@ -11,10 +11,11 @@ class MenuListItem extends Component {
 	const menuStyle = { 
 	fontSize: 14,
 	paddingTop: 10,
-	paddingBottom: 10
-	};
+	paddingBottom: 10,
+	width: this.props.width
+	}; 
     return ( 
-      <Col xs={2} style={menuStyle}> 
+      <Col xs={1} style={menuStyle}>
 		<a href={`/${menu.path}`}>{menu.name}</a> 
       </Col> 
     );

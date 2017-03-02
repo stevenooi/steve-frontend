@@ -5,7 +5,7 @@ import Menu from './Menu';
 class SidebarComponent extends Component {
   render() {
     return (
-	  <div class="container-fluid">
+	  <div className="container-fluid">
         <Menu />
 	  </div>
     );

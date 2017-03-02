@@ -11,12 +11,17 @@ import Login from './components/Login';
 import Page1 from './components/Page1';
 import Role from './components/Role';
 import RoleForm from './components/RoleForm';
+import Brand from './components/Brand';
+import BrandForm from './components/BrandForm';
+import User from './components/User';
+import UserForm from './components/UserForm';
 import Store from './components/Store';
 import StoreForm from './components/StoreForm';
 import Template from './components/Template';
 import TemplateForm from './components/TemplateForm';
 import Group from './components/Group';
 import GroupForm from './components/GroupForm';
+import ChangePasswordForm from './components/ChangePasswordForm';
 import Progress from './components/Progress';
 
 import AuthenticationFilter from './components/AuthenticationFilter';
@@ -33,11 +38,12 @@ class Root extends Component {
 
 		<Route path='/' component={AuthenticationFilter}>
 			<Route path="/home" component={App}>
-				<IndexRoute component={Index}/> 
-				<Route path='/contact/:id' component={MenuDetail} />
+				<IndexRoute component={Index}/>  
 				<Route path='/page1' component={Page1} />
 				<Route path='/role' component={Role} />
-				<Route path='/roleForm' component={RoleForm} />				
+				<Route path='/roleForm' component={RoleForm} />		
+				<Route path='/brand' component={Brand} />
+				<Route path='/brandForm' component={BrandForm} />				
 				<Route path='/store' component={Store} />
 				<Route path='/storeForm' component={StoreForm} />			
 				<Route path='/template' component={Template} />
@@ -45,6 +51,9 @@ class Root extends Component {
 				<Route path='/group' component={Group} />
 				<Route path='/groupForm' component={GroupForm} />
 				<Route path='/progress' component={Progress} />
+				<Route path='/user' component={User} />
+				<Route path='/userForm' component={UserForm} />
+				<Route path='/changePassword' component={ChangePasswordForm} />
 			</Route>
 		</Route> 
 		

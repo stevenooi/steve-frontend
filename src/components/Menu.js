@@ -8,11 +8,12 @@ import MenuStore from '../stores/MenuStore';
 import MenuListItem from './MenuListItem';
 import { Grid, Row, Col } from 'react-bootstrap';
   
-function getMenuListItem(menu) {
+function getMenuListItem(menu,width) {
   return (
     <MenuListItem
       key={menu.id}
       menu={menu}
+	  width={width}
     />
   );
 }
@@ -25,9 +26,13 @@ class MenuComponent extends Component {
     this.state = {
       menu: []
     }
+	this.params = {};
     // We need to bind this to onChange so we can have
     // the proper this reference inside the method
     this.onChange = this.onChange.bind(this);
+  }
+  addParams(fieldName,value) {
+	this.params[fieldName] = value;  
   }
 
   componentWillMount() {
@@ -35,7 +40,8 @@ class MenuComponent extends Component {
   }
 
   componentDidMount() {
-    MenuActions.recieveContacts();
+	this.addParams("roleName",localStorage.getItem('role')); 
+    MenuActions.getMenu(JSON.parse(JSON.stringify(this.params)));
   }
 
   componentWillUnmount() {
@@ -52,7 +58,10 @@ class MenuComponent extends Component {
     let menuListItems;
     if (this.state.menu) { 
       // Map over the contacts and get an element for each of them
-      menuListItems = this.state.menu.map(menu => getMenuListItem(menu));
+	  var menuWidth = 150;
+	  if(this.state.menu.length > 0)
+		  menuWidth = 900/this.state.menu.length;
+      menuListItems = this.state.menu.map(menu => getMenuListItem(menu,menuWidth));
     }
 	const menuStyle = { 
 	fontSize: 14	,
@@ -65,6 +74,7 @@ class MenuComponent extends Component {
 	marginBottom : 14,
 	minWidth: 500,
 	};
+	console.log("menu length :" + menuListItems.length);
     return ( 
 		<div style={menuStyle}> 
         <Grid>

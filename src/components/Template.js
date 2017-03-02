@@ -3,13 +3,17 @@ import { ListGroup } from 'react-bootstrap';
 import TemplateActions from '../actions/TemplateActions';
 import TemplateStore from '../stores/TemplateStore';
 
+import DefaultPaginationConstants from '../constants/DefaultPaginationConstants';
+
 import LinkComponent from '../utils/griddle/LinkComponent';
 import HeaderComponentInputFilter from '../utils/griddle/HeaderComponentInputFilter';
 import HeaderComponentDropDownFilter from '../utils/griddle/HeaderComponentDropDownFilter';
 import HeaderComponentDefault from '../utils/griddle/HeaderComponentDefault';
 import EditComponent from '../utils/griddle/EditComponent';
+import ViewComponent from '../utils/griddle/ViewComponent';
+import StatusComponent from '../utils/griddle/StatusComponent';
 import CloneComponent from '../utils/griddle/CloneComponent';
-import DeleteComponent from '../utils/griddle/DeleteComponent';
+import DependencyDeleteComponent from '../utils/griddle/DependencyDeleteComponent';
 
 import CustomRedirect from '../utils/CustomRedirect';
 
@@ -34,6 +38,12 @@ var columnMeta = [
   "columnName": "location",
   "customHeaderComponent": HeaderComponentDropDownFilter,
   "customHeaderComponentProps": { color: 'black' }
+  }, 
+  { 
+  "columnName": "status",
+  "customHeaderComponent": HeaderComponentDefault,
+  "customComponent": StatusComponent, 
+  "customHeaderComponentProps": { color: 'black' }
   },
   { 
   "columnName": "Edit",  
@@ -43,11 +53,18 @@ var columnMeta = [
   "customComponent": EditComponent
   }, 
   { 
+  "columnName": "View",  
+  "customHeaderComponent": HeaderComponentDefault,
+  "customHeaderComponentProps": { color: 'black' },
+  "sortable": false,
+  "customComponent": ViewComponent
+  }, 
+  { 
   "columnName": "Delete", 
   "customHeaderComponent": HeaderComponentDefault,
   "customHeaderComponentProps": { color: 'black' },
   "sortable": false,
-  "customComponent": DeleteComponent
+  "customComponent": DependencyDeleteComponent
   },
   { 
   "columnName": "Clone",  
@@ -60,14 +77,17 @@ var columnMeta = [
 
 
 function addEditDeleteButton(data, url) {
-console.log("data.status:" + data.status);
-  if(data.status != TemplateKeyConstants.ACTIVE)
-  {
+	
+  data.Edit = "";
+  data.Delete = "";
+  if(data.status != TemplateKeyConstants.ACTIVE && data.status != TemplateKeyConstants.DEPLOYED)
+  { 
 	  data.Edit = data.id + url;
-	  data.Delete = data.id + url;
+	  data.Delete = data.id + url + "/1";   
   }
   data.Clone = data.id + url;
   
+  data.View = data.id + url;
   return (
 	 data
   );
@@ -86,11 +106,12 @@ class TemplateComponent extends Component {
     this.onChange = this.onChange.bind(this);
     this.addClick = this.addClick.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+	this.noDataMessage = <div className="loader" style={{marginTop:20,marginBottom:20}}></div>;	
   }
 
   handleDelete()
   {
-	alert('delete handled');
+	//alert('delete handled');
   }	 
 
   addClick()
@@ -116,18 +137,17 @@ class TemplateComponent extends Component {
     }); 
   }
   
-  
-  
   render() {
     let dataListItems;
 	if (this.state.data1) { 
       dataListItems = this.state.data1.map(data => addEditDeleteButton(data, this.props.location.pathname));
     }  
-	
+    dataListItems.map(data => console.log("this.state.data1.Edit:" + data.Edit));
+	 
     return (
 		<div>
 			<div style={{marginBottom:15}}>
-				<Griddle results={this.state.data1} columnMetadata={columnMeta} /*showFilter={true}*/ sortable={true} noDataMessage={"No data could be found."} handleDelete={this.handleDelete} />
+				<Griddle results={this.state.data1} columnMetadata={columnMeta} /*showFilter={true}*/ resultsPerPage={DefaultPaginationConstants.RECORD_PER_PAGE} sortable={true} noDataMessage={this.noDataMessage} handleDelete={this.handleDelete} />
 			</div>
 			<div>
 				<button type="button" className ="btn btn-primary" onClick={this.addClick} >Create New Template</button>

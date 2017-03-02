@@ -72,7 +72,7 @@ const GroupStore = new GroupStoreClass();
 GroupStore.dispatchToken = AppDispatcher.register(action => { 
  
   switch(action.actionType) {
-    case GroupConstants.RECIEVE_DATA:
+    case GroupConstants.GROUP_RECIEVE_DATA:
 	  setData1(action.data1);
       GroupStore.emitChange();
       break
@@ -96,7 +96,7 @@ GroupStore.dispatchToken = AppDispatcher.register(action => {
 	  setDataAllGroupExceptSelf(action.data); 
       GroupStore.emitChange();
       break
-    case GroupConstants.RECIEVE_DATA_ERROR:
+    case GroupConstants.GROUP_RECIEVE_DATA_ERROR:
       alert(action.message);
       GroupStore.emitChange();
       break

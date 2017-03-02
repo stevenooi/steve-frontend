@@ -32,7 +32,8 @@ class StoreFormComponent extends Component {
 	  groupId: "",
       data1: [],
       data2: [],
-      data3: []
+      data3: [],
+      allBrandData: []
     } 
 	this.params = {};
 	//this.dataId = this.props.location.query.id;
@@ -45,6 +46,7 @@ class StoreFormComponent extends Component {
     this.handleChange2 = this.handleChange2.bind(this);
     this.handleChange3 = this.handleChange3.bind(this);
     this.handleChange4 = this.handleChange4.bind(this);
+    this.handleChange5 = this.handleChange5.bind(this);
     this.handleClick1 = this.handleClick1.bind(this);
     this.test = this.test.bind(this);
   }
@@ -53,23 +55,25 @@ class StoreFormComponent extends Component {
     this.setState({
       data1: StoreStore.getDataSingle(),
       data2: StoreStore.getData2(),
-      data3: StoreStore.getData3()
+      data3: StoreStore.getData3(),
+	  allBrandData: StoreStore.getAllBrands()
     });   
 	
 	//set value if data is available
-	if(this.state.data1[0] != null)
+	if(this.state.data1 != null && this.state.data1[0] != null)
 	{
 		this.setState({
 		  storeName: this.state.data1[0].name,
 		  saltId: this.state.data1[0].saltId,
 		  templateId: this.state.data1[0].templateId ,
 		  templateName: this.state.data1[0].templateName ,
-		  groupId: this.state.data1[0].groupId 
+		  groupId: this.state.data1[0].groupId ,
+		  brandId: this.state.data1[0].brandId 
 		}); 
 	}
 
 	//set default dropdown value to first data if no data is available
-	if(this.state.data2[0] != null && this.state.data1[0] == null)
+	if(this.state.data2 != null && this.state.data1 != null && this.state.data2[0] != null && this.state.data1[0] == null)
 	{
 		this.setState({
 		  templateId: this.state.data2[0].id 
@@ -77,10 +81,18 @@ class StoreFormComponent extends Component {
 	}	
 	
 	//set default dropdown value to first data if no data is available
-	if(this.state.data3[0] != null && this.state.data1[0] == null)
+	if(this.state.data3 != null && this.state.data1 != null && this.state.data3[0] != null && this.state.data1[0] == null)
 	{
 		this.setState({
 		  groupId: this.state.data3[0].id 
+		}); 
+	}	
+
+	//set default dropdown value to first data if no data is available
+	if(this.state.allBrandData != null && this.state.data1 != null && this.state.allBrandData[0] != null && this.state.data1[0] == null)
+	{
+		this.setState({
+		  brandId: this.state.allBrandData[0].id 
 		}); 
 	}	
   }
@@ -93,6 +105,7 @@ class StoreFormComponent extends Component {
     StoreActions.getDataById(this.props.location.query.id); 
 	StoreActions.getAllTemplates();
 	StoreActions.getAllGroups(); 
+	StoreActions.getAllBrands(); 
   }
 
   componentWillUnmount() { 
@@ -136,13 +149,18 @@ class StoreFormComponent extends Component {
 	this.setState({groupId: event.target.value}); 
   }
   
+  handleChange5(event) {  
+	this.setState({brandId: event.target.value}); 
+  }
+  
   handleClick1(event) {   
 	 
 	this.addParams("name",this.state.storeName);
 	this.addParams("saltId",this.state.saltId);
+	this.addParams("brandId",this.state.brandId);
 	//this.addParams("templateId",this.state.templateId); 
 	this.addParams("groupId",this.state.groupId); 
-	if(this.state.data1[0]!= null && this.state.data1[0].name != null)
+	if(this.state.data1 != null && this.state.data1[0]!= null && this.state.data1[0].id != null)
 	{  
 		this.addParams("id",this.state.data1[0].id); 
 		StoreActions.editData(JSON.parse(JSON.stringify(this.params)));
@@ -166,10 +184,10 @@ class StoreFormComponent extends Component {
 	  <form ref="mainForm">
 		<div className="form-group">
 		  {this.props.location.query.id != null ? (		  
-			  <div class="form-group row">
-				<label class="col-sm-2 col-form-label">ID</label>
-				<div class="col-sm-10">
-				  <p class="form-control-static">{this.props.location.query.id} </p>
+			  <div className="form-group row">
+				<label className="col-sm-2 col-form-label">ID</label>
+				<div className="col-sm-10" style={{marginTop:-8}}>
+				  <p className="form-control-static">{this.props.location.query.id} </p>
 				</div>
 			  </div>
 		  ) :  ""}
@@ -190,6 +208,10 @@ class StoreFormComponent extends Component {
 		  <div>
 			  <label >Group:</label>
 			  <CustomDropDown data={this.state.data3} currentValue={this.state.groupId} customKey="id" customDescription="name" onChange={this.handleChange4}/>
+		  </div>  
+		  <div>
+			  <label >Brand:</label>
+			  <CustomDropDown data={this.state.allBrandData} currentValue={this.state.brandId} customKey="id" customDescription="name" onChange={this.handleChange5}/>
 		  </div>
 		</div>   
      		  

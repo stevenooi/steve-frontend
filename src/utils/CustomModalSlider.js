@@ -41,13 +41,13 @@ export default class CustomModalSlider extends Component {
 	{
 		
 		//this.imageArray = ['0804397c-d62b-249c-943e-2bdfeaec846f.jpg','bd48bc12-1f1b-9294-7517-8dec8f9f7847.jpg'];
+		console.log("allImages:" + this.props.img);
 		var allImages =  this.props.img;
 		this.imageArray = allImages.toString().split(",");
 		
 		
 		if(this.currentCount == null)
 			this.currentCount = 0;
-		console.log('here1XXXXX:' + this.imageArray[this.currentCount]);
 		this.setState({
 			currentImage : this.imageArray[this.currentCount]
 		}  )
@@ -87,13 +87,20 @@ export default class CustomModalSlider extends Component {
 	}
 	
     openModal() {  
-		this.setState({
-            modalIsOpen : true
-        });
-		this.isOpen = true;
-	//	this.runFrame(this.uuid);
-    	this.runFrame(this.getNewUUID());
-		console.log("this.props.img:" + this.props.img);
+		if(this.props.img.length > 0)
+		{
+			this.setState({
+				modalIsOpen : true
+			});
+			this.isOpen = true;
+		//	this.runFrame(this.uuid);
+			this.runFrame(this.getNewUUID());
+			console.log("this.props.img:" + this.props.img);
+		}
+		else
+		{
+			alert('No images uploaded for slides. Please upload at least one image for preview');
+		}
     }
 
     afterOpenModal() {

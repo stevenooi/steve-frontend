@@ -23,7 +23,7 @@ class EditComponent extends Component {
 	  
 	  if(location == "" || location == null)
 	  {
-		  alert('Active data is locked and not editable');
+		  alert('Active and Deployed data is locked and not editable');
 	  }
 	  else
 	  {
@@ -32,12 +32,14 @@ class EditComponent extends Component {
   }
   
   render(){
-    return ( 
+	
+    return ( <div>
        <img
-          style={{width: 20, height: 20,cursor: 'pointer'}}
-          src={'images/edit-button.png'}
+          style={{marginLeft:4,width: 20, height: 20,cursor: 'pointer'}}
+          src={'images/edit4.png'}
 		  onClick={this.editClick}
         />  
+		</div>
     );
   }
 }

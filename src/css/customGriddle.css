@@ -44,3 +44,29 @@ width:	150px
    opacity: 1;
    transition: opacity 500ms ease-in;
 }
+
+
+.modal-appear {
+   opacity: 0.01;
+}
+
+.modal-appear.modal-appear-active {
+   opacity: 1;
+   transition: opacity 5000ms ease-in;
+}
+
+.loader {
+    border: 10px solid #f7f7f7; /* Light grey */
+    border-top: 10px solid #cc0000; /* Blue */
+    border-bottom: 10px solid #cc0000; /* Blue */
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    animation: spin 2s linear infinite;
+	margin-left:calc((100% - 100px)/2 );
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

@@ -12,13 +12,13 @@ export default {
       .getData('api/role')
       .then(data => {
         AppDispatcher.dispatch({	
-          actionType: RoleConstants.RECIEVE_DATA,
+          actionType: RoleConstants.ROLE_RECIEVE_DATA,
           data1: data
         });
       })
       .catch(message => {
         AppDispatcher.dispatch({
-          actionType: RoleConstants.RECIEVE_DATA_ERROR,
+          actionType: RoleConstants.ROLE_RECIEVE_DATA_ERROR,
           message: message
         });
       });
@@ -29,13 +29,13 @@ export default {
       .then(data => {   
 	  CustomRedirect.redirect("/role"); 
 	  AppDispatcher.dispatch({	
-          actionType: RoleConstants.RECIEVE_DATA
+          actionType: RoleConstants.ROLE_RECIEVE_DATA
         });
       })
       .catch(message => {
 		alert(message);
 		AppDispatcher.dispatch({
-          actionType: RoleConstants.RECIEVE_DATA_ERROR,
+          actionType: RoleConstants.ROLE_RECIEVE_DATA_ERROR,
           message: message
         });
       });
@@ -52,7 +52,7 @@ export default {
       })
       .catch(message => {
         AppDispatcher.dispatch({
-          actionType: RoleConstants.RECIEVE_DATA_ERROR,
+          actionType: RoleConstants.ROLE_RECIEVE_DATA_ERROR,
           message: message
         });
       });
@@ -60,16 +60,18 @@ export default {
   editData: (params) => {
     RoleAPI
       .manipulateData('api/editrole',params)
-      .then(data => {  
+      .then(data => {    
+	  
 	  CustomRedirect.redirect("/role");
-	  AppDispatcher.dispatch({	
-          actionType: RoleConstants.RECIEVE_DATA_SINGLE
+	AppDispatcher.dispatch({	
+          actionType: RoleConstants.ROLE_RECIEVE_DATA_SINGLE
         });
+		   
       })
-      .catch(message => {
+      .catch(message => {  
 		alert(message);
 		AppDispatcher.dispatch({
-          actionType: RoleConstants.RECIEVE_DATA_ERROR,
+          actionType: RoleConstants.ROLE_RECIEVE_DATA_ERROR,
           message: message
         });
       });

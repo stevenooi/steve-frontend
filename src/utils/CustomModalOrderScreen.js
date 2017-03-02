@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
 import ApiSettings from '../config/apiSettings';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'; 
 
 export default class CustomModalOrderScreen extends Component {
     constructor(props) {
@@ -101,6 +102,20 @@ export default class CustomModalOrderScreen extends Component {
 		if( this.props.imgThankYou != null)
 			this.imgThankYou = ApiSettings.NODE_SERVER +"/api/retrieveimage/" + this.props.imgThankYou;
 		
+		let title = this.props.title;
+		if(title != "" || title != null)
+		{  
+			var extraCharWidth = -20;
+			if(title.length < 12)
+			{
+				var extraChar = 12 - title.length;
+				extraChar = extraChar / 2;
+				extraCharWidth = extraChar * 4.5;
+			}		
+			title = <div style={{paddingLeft:extraCharWidth}}>{title}</div>;
+			
+		}
+		
         return (
             <section>
 				<table height="200" width="200" style={{border:'solid',borderWidth:'1px'}}>
@@ -131,7 +146,9 @@ export default class CustomModalOrderScreen extends Component {
 						   </table>
 						
 						</div>
-					 
+						<ReactCSSTransitionGroup transitionName = 'modal' transitionAppear = {true} transitonEnter = {false} transitionLeave = {false}>
+							<div style={{position:'absolute',top:0,left:"calc((100% /2 - 210px) )",fontSize:70}}>{title}</div>
+						</ReactCSSTransitionGroup>
 					</Modal>
  
             </section>

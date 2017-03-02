@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { ListGroup } from 'react-bootstrap'; 
 import GroupActions from '../actions/GroupActions';
 import GroupStore from '../stores/GroupStore';
+import DefaultPaginationConstants from '../constants/DefaultPaginationConstants';
 
 import LinkComponent from '../utils/griddle/LinkComponent';
 import HeaderComponentInputFilter from '../utils/griddle/HeaderComponentInputFilter';
 import HeaderComponentDropDownFilter from '../utils/griddle/HeaderComponentDropDownFilter';
 import HeaderComponentDefault from '../utils/griddle/HeaderComponentDefault';
 import EditComponent from '../utils/griddle/EditComponent';
-import DeleteComponent from '../utils/griddle/DeleteComponent';
+import DependencyDeleteComponent from '../utils/griddle/DependencyDeleteComponent';
 
 import CustomRedirect from '../utils/CustomRedirect';
 
@@ -52,7 +53,8 @@ class GroupComponent extends Component {
       data1: [],
       data2: []
     } 
-	 
+	this.noDataMessage = <div className="loader" style={{marginTop:20,marginBottom:20}}></div>;
+    
     this.onChange = this.onChange.bind(this);
     this.addClick = this.addClick.bind(this);  
   }
@@ -106,7 +108,7 @@ class GroupComponent extends Component {
 	  "customHeaderComponent": HeaderComponentDefault,
 	  "customHeaderComponentProps": { color: 'black' },
 	  "sortable": false,
-	  "customComponent": DeleteComponent 
+	  "customComponent": DependencyDeleteComponent 
 	  }, 
 	  { 
 	  "columnName": "childCount",  
@@ -151,7 +153,7 @@ class GroupComponent extends Component {
 	return (
 		<div>
 			<div style={{marginBottom:15}}>
-				<Griddle results={this.state.data1} columnMetadata={this.columnMeta}  columns = {['id', 'name', 'parentName','companyName','Edit','Delete']} /*showFilter={true}*/ sortable={true} noDataMessage={"No data could be found."}   />
+				<Griddle results={this.state.data1} resultsPerPage={DefaultPaginationConstants.RECORD_PER_PAGE} columnMetadata={this.columnMeta}  columns = {['id', 'name', 'parentName','companyName','Edit','Delete']} /*showFilter={true}*/ sortable={true} noDataMessage={this.noDataMessage}   />
 			</div>
 			<div>
 				<button type="button" className ="btn btn-primary" onClick={this.addClick} >Create New Group</button>

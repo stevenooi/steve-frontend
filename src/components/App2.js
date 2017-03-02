@@ -8,7 +8,7 @@ import { Grid, Row, Col } from 'react-bootstrap';
 class AppComponent extends Component {
 
   componentWillMount() { 
-	localStorage.setItem('loggedIn', "NO"); 
+	localStorage.setItem('loggedIn', "NO");  
   }
 
   componentDidMount()

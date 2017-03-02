@@ -8,44 +8,99 @@ import AuthenticateActions from '../actions/AuthenticateActions';
 import AuthenticateStore from '../stores/AuthenticateStore';
 import { browserHistory } from 'react-router';
 
+function timestamp() {
+  var d = new Date();
+  var time = [pad(d.getHours()),
+              pad(d.getMinutes()),
+              pad(d.getSeconds())].join(':');
+  return d.getDate() + "-" + d.getMonth() + "-" + (d.getYear() + 1900) + " " + time;
+}
+
+function pad(n) {
+  return n < 10 ? '0' + n.toString(10) : n.toString(10);
+}
+
 class AppComponent extends Component {
 constructor(props) {
     super(props)
     this.handleChange1 = this.handleChange1.bind(this); 
     this.handleChange2 = this.handleChange2.bind(this); 
     this.handleSubmit = this.handleSubmit.bind(this); 
+	this.handleKeyPress = this.handleKeyPress.bind(this);
 	
     this.onChange = this.onChange.bind(this);
     this.state ={
 		username:"",
 		password:"",
-		errorMsg:""
+		errorMsg:"",
+		loginResult: ""
     }
+	this.params = {};
 	
 }
-  onChange() {
-	//redirect to home if login successful
-    if (localStorage.getItem('loggedIn') == "YES" ) {  
-		browserHistory.replace("/home")
+
+handleKeyPress(event)
+{
+	//console.log("key pressed:" + event.key);
+	if (event.key === 'Enter') {
+		this.handleSubmit(event);
     }
-	this.setState({errorMsg: AuthenticateStore.getErrorMsg()});
+}
+
+  onChange() {
+	  
+    this.setState({
+      loginResult: AuthenticateStore.getLoginResult() 
+    });   
+	 
+	if(this.state.loginResult != null)
+	{ 
+		if(this.state.loginResult.responseCode == 1)
+		{
+			localStorage.setItem('username',this.state.username);
+			localStorage.setItem('logintime',timestamp());
+			localStorage.setItem('role',this.state.loginResult.roleCode);
+			localStorage.setItem('loggedIn', "YES");  
+			//redirect to home
+			browserHistory.replace("/template")
+		}
+		else
+		{
+			this.setState({errorMsg: this.state.loginResult.message});
+		}
+	}
+	else
+	{
+		this.setState({errorMsg: "Server error. Please contact administrator"});
+	}
   }
   
   handleChange1(event) {
 	console.log("event.target : " + event.target.name);
+	 
     this.setState({username: event.target.value});
   }
   
   handleChange2(event) {
 	console.log("event.target : " + event.target.name);
-    this.setState({password: event.target.value});
+    if (event.key === 'Enter') {
+		this.handleSubmit(event);
+    }
+	this.setState({password: event.target.value});
   }
   
   handleSubmit(event) {
 	console.log("Submit button clicked");
-	AuthenticateActions.login(this.state.username,this.state.password);
+	this.addParams("username",this.state.username);
+	this.addParams("password",this.state.password);
+	AuthenticateActions.login(JSON.parse(JSON.stringify(this.params)));
 	console.log("Submit button clicked Afters");
   }
+  
+  addParams(fieldName,value) {
+	this.params[fieldName] = value;  
+  }
+
   
   componentWillMount() {
     AuthenticateStore.addChangeListener(this.onChange);
@@ -61,18 +116,17 @@ constructor(props) {
 
   render() {
     return (
-      <div> 
-        <Grid>
-          <Row>
-            <Col xs={12} md={3}> 
-				<Row><Col xs={12}>Login to the system</Col></Row> 
-				<Row><Col xs={4}>Username</Col><Col xs={8}><input type="Text" name="username" ref="username" value={this.state.username} onChange={this.handleChange1}/></Col></Row>
-				<Row><Col xs={4}>Password</Col><Col xs={8}><input type="password" value={this.state.password} onChange={this.handleChange2}/></Col></Row>
-				<Row><Col xs={12}><input type="button" value="Submit" onClick={this.handleSubmit}/></Col></Row> 
-				<Row><Col xs={12}><font color="red">{this.state.errorMsg}</font></Col></Row> 
-            </Col>
-          </Row>
-        </Grid>
+      <div style={{textAlign:'center',borderStyle:'none',borderWidth:'1px',borderColor:'#ff5050',borderRadius:'15px'}}> 
+	  <div style={{}}>
+	    <table style={{width:260,marginLeft:"calc((100% - 260px)/2 )"}}>
+		<tr><td style={{width:200,textAlign:'center',padding:25}}><img src="images/Summit_COD_Manager_Logo_Light_Large.png" alt="" style={{marginLeft:-30,width:280,textAlign:"center"}} /></td></tr> 
+		<tr><td style={{width:200,textAlign:'center',fontSize:13,paddingBottom:15,borderLeftStyle:'none',borderWidth:'1px',borderColor:'#ff5050',borderRadius:'15px'}}><span className="glyphicon glyphicon-user" style={{paddingRight:10}}/><input type="Text" name="username" ref="username" style={{textAlign:'center',width:200,fontSize:10,height:25}} placeholder="Enter Your Username" value={this.state.username} onKeyPress={this.handleKeyPress} onChange={this.handleChange1}/></td></tr>
+		<tr><td style={{width:200,textAlign:'center',fontSize:13,paddingBottom:15,borderLeftStyle:'none',borderRightStyle:'none',borderWidth:'1px',borderColor:'#ff5050',borderRadius:'15px'}}><span className="glyphicon glyphicon-lock" style={{paddingRight:10}}/><input type="password" style={{textAlign:'center',fontSize:10,width:200,height:25}} value={this.state.password} placeholder="Enter Your Password" onKeyPress={this.handleKeyPress} onChange={this.handleChange2}/></td></tr>
+		<tr><td style={{width:200,textAlign:'center',fontSize:13,paddingBottom:15}}><input type="button" className="btn btn-danger btn-block" value="LOG IN" onClick={this.handleSubmit}/></td></tr>
+		<tr><td style={{width:200,textAlign:'center',fontSize:13}}><font color="red">{this.state.errorMsg}</font></td></tr>
+		</table>
+		</div>
+		 
       </div>
     );
   }

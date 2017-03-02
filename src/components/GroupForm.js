@@ -145,10 +145,10 @@ class GroupFormComponent extends Component {
 	  <form ref="mainForm">
 		<div className="form-group">
 		  {this.props.location.query.id != null ? (		  
-			  <div class="form-group row">
-				<label class="col-sm-2 col-form-label">ID</label>
-				<div class="col-sm-10">
-				  <p class="form-control-static">{this.props.location.query.id} </p>
+			  <div className="form-group row">
+				<label className="col-sm-2 col-form-label">ID</label>
+				<div className="col-sm-10" style={{marginTop:-8}}>
+				  <p className="form-control-static">{this.props.location.query.id} </p>
 				</div>
 			  </div>
 		  ) :  ""}

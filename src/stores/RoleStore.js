@@ -49,7 +49,7 @@ const RoleStore = new RoleStoreClass();
 RoleStore.dispatchToken = AppDispatcher.register(action => { 
  
   switch(action.actionType) {
-    case RoleConstants.RECIEVE_DATA:
+    case RoleConstants.ROLE_RECIEVE_DATA:
 	  setData1(action.data1);
       RoleStore.emitChange();
       break
@@ -60,7 +60,7 @@ RoleStore.dispatchToken = AppDispatcher.register(action => {
       RoleStore.emitChange();
       break
  
-    case RoleConstants.RECIEVE_DATA_ERROR:
+    case RoleConstants.ROLE_RECIEVE_DATA_ERROR:
       alert(action.message);
       RoleStore.emitChange();
       break

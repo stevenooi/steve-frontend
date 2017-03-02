@@ -68,6 +68,8 @@ class StoreComponent extends Component {
     super();
     // For our initial state, we just want
     // an empty array of contacts
+	this.noDataMessage = <div className="loader" style={{marginTop:20,marginBottom:20}}></div>;
+    
     this.state = {
       data1: []
     } 
@@ -114,7 +116,7 @@ class StoreComponent extends Component {
     return (
 		<div>
 			<div style={{marginBottom:15}}>
-			<Griddle results={this.state.data1} columnMetadata={columnMeta} /*showFilter={true}*/ sortable={true} noDataMessage={"No data could be found."} handleDelete={this.handleDelete} />
+			<Griddle results={this.state.data1} columnMetadata={columnMeta} /*showFilter={true}*/ sortable={true} noDataMessage={this.noDataMessage} handleDelete={this.handleDelete} />
 			</div>
 			<div>
 			<button type="button" className ="btn btn-primary" onClick={this.addClick} >Create New Store</button>

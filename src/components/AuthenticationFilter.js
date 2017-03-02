@@ -10,7 +10,7 @@ class AuthenticationFilter extends Component {
 		console.log("loggedIn");
 		// use React Router redirect 
 		if(this.props.location.pathname == "/")
-			browserHistory.replace("/home")
+			browserHistory.replace("/template")
     }
 	else
 	{ 

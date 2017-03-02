@@ -49,12 +49,12 @@ const ProgressStore = new ProgressStoreClass();
 ProgressStore.dispatchToken = AppDispatcher.register(action => { 
  
   switch(action.actionType) {
-    case ProgressConstants.RECIEVE_DATA:
+    case ProgressConstants.PROGRESS_RECIEVE_DATA:
 	  setData1(action.data1);
       ProgressStore.emitChange();
       break
 	  
-	case ProgressConstants.RECIEVE_DATA_ALL_TEMPLATES:
+	case ProgressConstants.PROGRESS_RECIEVE_DATA_ALL_TEMPLATES:
 	  setDataAllTemplates(action.data);
       ProgressStore.emitChange();
       break
@@ -65,7 +65,7 @@ ProgressStore.dispatchToken = AppDispatcher.register(action => {
       ProgressStore.emitChange();
       break
  
-    case ProgressConstants.RECIEVE_DATA_ERROR:
+    case ProgressConstants.PROGRESS_RECIEVE_DATA_ERROR:
       alert(action.message);
       ProgressStore.emitChange();
       break

@@ -29,7 +29,7 @@ export default {
         .post(ApiSettings.NODE_SERVER + "/" + url) 
 		.set('Content-Type', 'application/json')
 		.send(params) 
-        .end((err, response) => {
+        .end((err, response) => { 
           if (err) reject(err);
           resolve(JSON.parse(response.text));
         })

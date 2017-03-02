@@ -1,4 +1,4 @@
-
+ 
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import AuthenticateConstants from '../constants/AuthenticateConstants';
 import { EventEmitter } from 'events';
@@ -18,14 +18,25 @@ function removeUser() {
   localStorage.removeItem('id_token');
 }
 
+
+let _loginResult = [];  
+
+function setLoginResult(data) {
+  _loginResult = data;
+}
+ 
+ 
+
+
 //create store
 class AuthenticateStoreClass extends EventEmitter {
-constructor(props) {
+  constructor(props) {
     super(props) 
     this.state ={
 		errorMsg:""
-    }
-}
+    } 
+  }
+  
   emitChange() {
 	 console.log("AuthenticateStoreClass-emitChange");
     this.emit(CHANGE_EVENT);
@@ -63,26 +74,33 @@ constructor(props) {
   {
 	  return this.state.errorMsg;
   }
+   
+  getLoginResult()
+  {
+	  return _loginResult;
+  }
+  
 }
 
 const AuthenticateStore = new AuthenticateStoreClass();
 
 //register store in dipatcher
-AuthenticateStore.dispatchToken = AppDispatcher.register(action => { 
+AuthenticateStore.dispatchToken = AppDispatcher.register(action => {  
   switch(action.actionType) {
 
-    case AuthenticateConstants.LOGIN_USER:
-	  console.log("In AuthenticateStore - dispatchToken : " +action.username + " , " + action.password);
-	  
+    case AuthenticateConstants.LOGIN_USER: 
+	
+	  setLoginResult(action.data); 
+	  /*
 	  if(action.username == "admin" && action.password == "password")
 	  {
 		 console.log("logins success");
-		localStorage.setItem('loggedIn', "YES"); 
 	  }
 	  else{
 		 console.log("logins failed");
 		AuthenticateStore.state.errorMsg = "Invalid credentials";  
 	  }
+	  */
       //setUser(action.profile, action.token);
       AuthenticateStore.emitChange();
       break

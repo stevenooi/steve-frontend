@@ -28,8 +28,8 @@ class CloneComponent extends Component {
   render(){
     return ( 
        <img
-          style={{width: 20, height: 20,cursor: 'pointer'}}
-          src={'images/plus-button.png'}
+          style={{marginLeft:9,width: 20, height: 20,cursor: 'pointer'}}
+          src={'images/clone1.png'}
 		  onClick={this.editClick}
         />  
     );

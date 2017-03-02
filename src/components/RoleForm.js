@@ -30,11 +30,14 @@ class RoleFormComponent extends Component {
       data1: RoleStore.getDataSingle()
     }); 
 	
-    this.setState({
-      roleName: this.state.data1[0].name
-    }); 
+	if(this.state.data1!= null && this.state.data1[0] != null)
+    {
+		this.setState({
+		roleName: this.state.data1[0].name
+		});
+	}		
 	
-	console.log("data1 : " + this.state.data1[0].name);
+	//console.log("data1 : " + this.state.data1[0].name);
   }
 
   componentWillMount() { 
@@ -73,12 +76,11 @@ class RoleFormComponent extends Component {
 	//alert("max length validation: " + this.validateMaximum(this.state.roleName, 10));
 	//alert("is required validation: " + this.validateIsRequired(this.state.roleName));  
 	
-	this.addParams("name",this.state.roleName);
-	
+	this.addParams("name",this.state.roleName); 
 	if(this.state.data1[0] != null && this.state.data1[0].name != null)
 	{  
-		this.addParams("id",this.state.data1[0].id); 
-		RoleActions.editData(JSON.parse(JSON.stringify(this.params)));
+		this.addParams("id",this.state.data1[0].id);  
+		RoleActions.editData(JSON.parse(JSON.stringify(this.params))); 
 	}
 	else
 	{
@@ -98,10 +100,12 @@ class RoleFormComponent extends Component {
 	  <form ref="mainForm">
 		<div className="form-group">
 		  {this.props.location.query.id != null ? (		  
-			  <div class="form-group row">
-				<label class="col-sm-2 col-form-label">ID</label>
-				<div class="col-sm-10">
-				  <p class="form-control-static">{this.props.location.query.id} </p>
+			  <div className="form-group row">
+				<div>
+				<label className="col-sm-2 col-form-label">ID</label>
+				</div>
+				<div className="col-sm-10" style={{marginTop:-8}}>
+				  <p className="form-control-static">{this.props.location.query.id} </p>
 				</div>
 			  </div>
 		  ) :  ""}

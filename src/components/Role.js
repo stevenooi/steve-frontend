@@ -3,6 +3,7 @@ import { ListGroup } from 'react-bootstrap';
 import RoleActions from '../actions/RoleActions';
 import RoleStore from '../stores/RoleStore';
 
+import DefaultPaginationConstants from '../constants/DefaultPaginationConstants';
 import LinkComponent from '../utils/griddle/LinkComponent';
 import HeaderComponentInputFilter from '../utils/griddle/HeaderComponentInputFilter';
 import HeaderComponentDropDownFilter from '../utils/griddle/HeaderComponentDropDownFilter';
@@ -67,6 +68,7 @@ class RoleComponent extends Component {
       data1: []
     } 
 	
+	this.noDataMessage = <div className="loader" style={{marginTop:20,marginBottom:20}}></div>;	
     this.onChange = this.onChange.bind(this);
     this.addClick = this.addClick.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
@@ -109,7 +111,7 @@ class RoleComponent extends Component {
     return (
 		<div>
 			<div style={{marginBottom:15}}>
-			<Griddle results={this.state.data1} columnMetadata={columnMeta} /*showFilter={true}*/ sortable={true} noDataMessage={"No data could be found."} handleDelete={this.handleDelete} />
+  <Griddle results={this.state.data1} resultsPerPage={DefaultPaginationConstants.RECORD_PER_PAGE} columnMetadata={columnMeta} /*showFilter={true}*/ sortable={true} noDataMessage={this.noDataMessage} handleDelete={this.handleDelete} />
 			</div>
 			<div>
 			<button type="button" className ="btn btn-primary" onClick={this.addClick} >Create New Role</button>
