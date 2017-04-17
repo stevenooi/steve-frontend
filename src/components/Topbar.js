@@ -5,8 +5,8 @@ import Menu from './Menu';
 class SidebarComponent extends Component {
   render() {
     return (
-	  <div class="container-fluid">
-        <Menu />
+	  <div className="container-fluid">
+        <Menu currentURL={this.props.location.pathname} />
 	  </div>
     );
   }

@@ -3,12 +3,15 @@
 import React, { Component } from 'react';
 import { Router, Route, IndexRoute, Redirect } from 'react-router';
 import Index from './components/Index'; 
-import MenuDetail from './components/MenuDetail';
 
 import App from './components/App';
 import App2 from './components/App2';
 import Login from './components/Login';
-import Page1 from './components/Page1';
+import Page1 from './components/Page1'; 
+import User from './components/User';
+import UserForm from './components/UserForm'; 
+import TemplateForm from './components/TemplateForm';  
+import Progress from './components/Progress';
 
 import AuthenticationFilter from './components/AuthenticationFilter';
 
@@ -24,9 +27,11 @@ class Root extends Component {
 
 		<Route path='/' component={AuthenticationFilter}>
 			<Route path="/home" component={App}>
-				<IndexRoute component={Index}/> 
-				<Route path='/contact/:id' component={MenuDetail} />
-				<Route path='/page1' component={Page1} />
+				<IndexRoute component={Index}/>   	 
+				<Route path='/templateForm' component={TemplateForm} /> 
+				<Route path='/progress' component={Progress} />
+				<Route path='/user' component={User} />
+				<Route path='/userForm' component={UserForm} /> 
 			</Route>
 		</Route> 
 		

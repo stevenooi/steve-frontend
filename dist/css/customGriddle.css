@@ -1,0 +1,80 @@
+.columnStoreBar
+{
+width:	615px;
+
+}
+
+.column40
+{
+width:	40px
+}
+
+.column150
+{
+width:	150px
+}
+
+.columnStoreCheck
+{
+	width:	38px;
+    vertical-align: text-top;
+}
+
+.alignTop
+{
+    vertical-align: text-top;
+}
+
+.storeGroup
+{
+    vertical-align: text-top;
+	width:140px;
+}
+.storeTemplate
+{
+    vertical-align: text-top;
+	width:130px;
+}
+
+.example-appear {
+   opacity: 0.01;
+}
+
+.example-appear.example-appear-active {
+   opacity: 1;
+   transition: opacity 500ms ease-in;
+}
+
+
+.modal-appear {
+   opacity: 0.01;
+}
+
+.modal-appear.modal-appear-active {
+   opacity: 1;
+   transition: opacity 5000ms ease-in;
+}
+
+.loader {
+    border: 10px solid #f7f7f7; /* Light grey */
+    border-top: 10px solid #cc0000; /* Blue */
+    border-bottom: 10px solid #cc0000; /* Blue */
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    animation: spin 2s linear infinite;
+	margin-left:calc((100% - 100px)/2 );
+}
+
+.loaderNoData { 
+    width: 100px;
+    height: 100px; 
+	margin-left:calc((100% - 100px)/2 );
+	font-size: 12px;
+	fonr-family: Arial;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

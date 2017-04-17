@@ -7,7 +7,9 @@ import BaseActions from '../actions/BaseActions';
 import BaseStore from '../stores/BaseStore';
 //import ContactListItem from './ContactListItem';
 //import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import Gallery from 'react-grid-gallery';
 import Griddle from 'griddle-react';
+var ws = require('ws');
 
 function getDataItem(data) {
   return (
@@ -121,7 +123,6 @@ var DeleteComponent = React.createClass({
   }
 });
 
-
 var columnMeta = [
   { 
   "columnName": "name",
@@ -165,7 +166,7 @@ function addEditDeleteButton(data) {
   return (
 	 data
   );
-}
+} 
 
 class Page1Component extends Component {
 
@@ -174,19 +175,55 @@ class Page1Component extends Component {
     // For our initial state, we just want
     // an empty array of contacts
     this.state = {
-      data1: []
-    }
+        images: "",
+        data1: []
+    } 
+
     // We need to bind this to onChange so we can have
     // the proper this reference inside the method
     this.onChange = this.onChange.bind(this);
+    this.onSelectImage = this.onSelectImage.bind(this);
+    this.lightBoxImageClick = this.lightBoxImageClick.bind(this);
   }
 
+  //currently unused as lightbox function is disabled
+  lightBoxImageClick(index, image)
+  {
+	  
+    this.setState({
+      selectedImage: index.currentTarget.src
+    }); 
+  }
+  
+    onSelectImage (index, image) { 
+		console.log("index:" + index);
+    this.setState({
+      selectedImage: index
+    }); 
+		 
+	  console.log("onselectimage activated 2s");
+    }
+
+  
+  test2()
+  {
+    this.setState({
+      selectedImage: "test2 activated"
+    }); 
+	  console.log("test2 activated");
+  }
+  
   componentWillMount() {
     BaseStore.addChangeListener(this.onChange);
   }
 
   componentDidMount() {
     BaseActions.getData1();
+  console.log("attempt to connect"); 
+const ws = new WebSocket('ws://192.168.3.125/ws', {
+  perMessageDeflate: false
+});
+  console.log("connection end");
   }
 
   componentWillUnmount() {
@@ -204,9 +241,11 @@ class Page1Component extends Component {
 	if (this.state.data1) { 
       dataListItems = this.state.data1.map(data => addEditDeleteButton(data));
     }  
-	
-    return (
-	   <Griddle results={this.state.data1} columnMetadata={columnMeta} /*showFilter={true}*/ sortable={true} noDataMessage={"No data could be found."} />
+
+    return ( 
+		<div>Seleced Image : {this.state.selectedImage}
+			<Gallery images={IMAGES} showImageCount={true} onSelectImage={this.onSelectImage} onClickThumbnail={this.onSelectImage} enableImageSelection={true} enableLightbox={false} onClickImage={this.lightBoxImageClick} backdropClosesModal={true} />
+		</div>
     );
   }
 }

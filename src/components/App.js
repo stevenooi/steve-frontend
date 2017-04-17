@@ -14,13 +14,13 @@ class AppComponent extends Component {
   render() {
     return (
       <div>
-        <Header></Header>
-              <Topbar />
-        <Grid>
-          <Row xs={1}>
+        <Header location={this.props.location} ></Header>
+              <Topbar location={this.props.location} />
+        <Grid >
+          <Row >
 		  </Row>
-          <Row xs={10}> 
-            <Col xs={12} md={9}>
+          <Row > 
+            <Col  style={{width:"calc((100% - 10px) )"}} xs={12} >
               {this.props.children} 
             </Col>
           </Row>

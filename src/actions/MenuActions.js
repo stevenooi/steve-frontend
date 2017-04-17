@@ -6,7 +6,23 @@ export default {
 
   recieveContacts: () => {
     MenuAPI
-      .getContacts('http://localhost:3001/api/menu')
+      .getContacts(ApiSettings.NODE_SERVER + '/api/menu')
+      .then(menu => {
+        AppDispatcher.dispatch({	
+          actionType: MenuConstants.RECIEVE_CONTACTS,
+          menus: menu
+        });
+      })
+      .catch(message => {
+        AppDispatcher.dispatch({
+          actionType: MenuConstants.RECIEVE_CONTACTS_ERROR,
+          message: message
+        });
+      });
+  },
+  getMenu: (params) => {
+    MenuAPI
+      .postMenu('api/menu',params)
       .then(menu => {
         AppDispatcher.dispatch({	
           actionType: MenuConstants.RECIEVE_CONTACTS,
@@ -23,7 +39,7 @@ export default {
 
   getContact: (id) => {
     MenuAPI
-      .getContact('http://localhost:3001/api/contacts/' + id)
+      .getContact(ApiSettings.NODE_SERVER + '/api/contacts/' + id)
       .then(menu => {
         AppDispatcher.dispatch({
           actionType: MenuConstants.RECIEVE_CONTACT,

@@ -12,7 +12,9 @@ let BowerWebpackPlugin = require('bower-webpack-plugin');
 let config = Object.assign({}, baseConfig, {
   entry: path.join(__dirname, '../src/index'),
   cache: false,
-  devtool: 'sourcemap',
+  devtool: 'sourcemap',node: {
+	fs: 'empty'
+  },
   plugins: [
     new webpack.optimize.DedupePlugin(),
     new webpack.DefinePlugin({
@@ -35,7 +37,14 @@ config.module.loaders.push({
   loader: 'babel',
   include: [].concat(
     config.additionalPaths,
-    [ path.join(__dirname, '/../src') ]
+    [ 
+		path.join(__dirname, '/../src'), 
+		path.join(__dirname, '/../node_modules/bindings/'), 
+		path.join(__dirname, '/../node_modules/ws/lib/'),  
+		path.join(__dirname, '/../node_modules/ws/'), 
+		path.join(__dirname, '/../node_modules/bufferutil/'),
+		path.join(__dirname, '/../node_modules/utf-8-validate/') 
+	]
   )
 });
 

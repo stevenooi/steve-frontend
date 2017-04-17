@@ -8,11 +8,18 @@ import MenuStore from '../stores/MenuStore';
 import MenuListItem from './MenuListItem';
 import { Grid, Row, Col } from 'react-bootstrap';
   
-function getMenuListItem(menu) {
+var countMenu = 0;
+
+function getMenuListItem(menu,width,currentURL) {
+  countMenu++;
+  
   return (
     <MenuListItem
       key={menu.id}
       menu={menu}
+	  width={width}
+	  countMenu={countMenu}
+	  currentURL={currentURL}
     />
   );
 }
@@ -20,14 +27,15 @@ class MenuComponent extends Component {
 
   constructor() {
     super();
-    // For our initial state, we just want
-    // an empty array of contacts
     this.state = {
       menu: []
     }
-    // We need to bind this to onChange so we can have
-    // the proper this reference inside the method
+	this.params = {}; 
     this.onChange = this.onChange.bind(this);
+  }
+  
+  addParams(fieldName,value) {
+	this.params[fieldName] = value;  
   }
 
   componentWillMount() {
@@ -35,7 +43,8 @@ class MenuComponent extends Component {
   }
 
   componentDidMount() {
-    MenuActions.recieveContacts();
+	this.addParams("roleName",localStorage.getItem('role')); 
+    MenuActions.getMenu(JSON.parse(JSON.stringify(this.params)));
   }
 
   componentWillUnmount() {
@@ -47,29 +56,38 @@ class MenuComponent extends Component {
       menu: MenuStore.getMenus()
     });
   }
-
+  
   render() {
     let menuListItems;
+	countMenu = 0;
     if (this.state.menu) { 
       // Map over the contacts and get an element for each of them
-      menuListItems = this.state.menu.map(menu => getMenuListItem(menu));
-    }
-	const menuStyle = { 
-	fontSize: 14	,
-	paddingTop: 0,
-	paddingBottom: 0,
-	borderStyle: 'solid',
-	borderWidth: 1,
-	borderColor:'#f2f2f2',
-	borderRadius: 0,
-	marginBottom : 14,
-	minWidth: 500,
-	};
+	  var menuWidth = 150;
+	  if(this.state.menu.length > 0)
+		  menuWidth = 900/this.state.menu.length;
+      menuListItems = this.state.menu.map(menu => getMenuListItem(menu,menuWidth,this.props.currentURL));
+    } 
+	
+	const menuStyleFirst = { 
+		fontSize: 14,
+		paddingTop: 10,
+		paddingBottom: 10,
+		width: '100%',
+		color: '#585858',  
+		borderTopStyle: 'solid',
+		borderTopWidth: '1px',
+		borderTopColor: '#CFD8DC', 
+		textAlign: 'center',
+		cursor: 'pointer'
+	}; 
+	
+	
+	let currentMenuStyle = menuStyleFirst;
     return ( 
-		<div style={menuStyle}> 
+		<div style={currentMenuStyle}  >
         <Grid>
-          <Row xs={12} >
-			{menuListItems}
+          <Row >
+			{menuListItems} 
 		  </Row>
         </Grid> 
 		</div>

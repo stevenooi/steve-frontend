@@ -37,10 +37,9 @@ class BaseStoreClass extends EventEmitter {
 
 const BaseStore = new BaseStoreClass();
  
-BaseStore.dispatchToken = AppDispatcher.register(action => { 
-
+BaseStore.dispatchToken = AppDispatcher.register(action => {  
   switch(action.actionType) {
-    case BaseConstants.RECIEVE_DATA:
+    case BaseConstants.RECIEVE_DATA: 
       setData1(action.data1);
       BaseStore.emitChange();
       break
