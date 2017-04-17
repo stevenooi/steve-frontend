@@ -1,15 +1,15 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
-import TemplateConstants from '../constants/TemplateConstants';
-import TemplateAPI from '../utils/rest/TemplateAPI';
+import TemplateConstants from '../constants/TemplateConstants'; 
 import ReactRedirect from 'react-redirect';
 import React, { Component } from 'react'; 
 import CustomRedirect from '../utils/CustomRedirect';
+import RestUtil from '../utils/general/RestUtil';
 
 export default {
  
   getData1: () => {
-    TemplateAPI
-      .getData('api/template')
+    RestUtil
+      .receiveDataPost('api/template')
       .then(data => {
         AppDispatcher.dispatch({	
           actionType: TemplateConstants.TEMPLATE_RECIEVE_DATA,
@@ -24,7 +24,7 @@ export default {
       });
   },
   getAllTemplates: () => {
-    TemplateAPI
+    RestUtil
       .getData('api/template')
       .then(data => {
         AppDispatcher.dispatch({	
@@ -40,7 +40,7 @@ export default {
       });
   }, 
    addData: (params) => { 
-    TemplateAPI
+    RestUtil
       .manipulateData('api/addtemplate',params)
       .then(data => {   
 	  CustomRedirect.redirect("/template"); 
@@ -58,7 +58,7 @@ export default {
   },
   getTemplateSlide: (params) => { 
   
-    TemplateAPI
+    RestUtil
       .getDataById('api/templateslide' ,params)
       .then(data => { 
         AppDispatcher.dispatch({	
@@ -74,7 +74,7 @@ export default {
       });
   },
   getDataById: (params) => { 
-    TemplateAPI
+    RestUtil
       .getDataById('api/template',params)
       .then(data => { 
         AppDispatcher.dispatch({	
@@ -90,7 +90,7 @@ export default {
       });
   },
   editData: (params) => { 
-    TemplateAPI
+    RestUtil
       .manipulateData('api/edittemplate',params)
       .then(data => {  
 	  CustomRedirect.redirect("/template");

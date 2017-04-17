@@ -1,24 +1,21 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
+import AuthenticateUtil from '../utils/general/AuthenticateUtil';
 
 class AuthenticationFilter extends Component {
 	
   componentDidMount() {
     const { dispatch, currentURL } = this.props  
-	console.log("currentURL:" + this.props.location.pathname);
-    if (localStorage.getItem('loggedIn') == "YES" ) { 
-		console.log("loggedIn");
-		// use React Router redirect 
-		if(this.props.location.pathname == "/")
-			browserHistory.replace("/template")
-    }
-	else
-	{ 
-		console.log("Not loggedIn");
-		browserHistory.replace("/login")
-	}
+	//console.log("currentURL:" + this.props.location.pathname);
+	
+	var authenticateFlag = true;
+	
+	//use of authenticateFlag to stop the next function from running if the previous function return false
+	authenticateFlag = AuthenticateUtil.checkLoginStatus(this,authenticateFlag); 
+	authenticateFlag = AuthenticateUtil.checkTimeOut(authenticateFlag);
+	authenticateFlag = AuthenticateUtil.updateLoginStatusUser(authenticateFlag);
   }
-
+   
   render() {
     if (localStorage.getItem('loggedIn') == "YES"){
       return this.props.children
@@ -27,11 +24,7 @@ class AuthenticationFilter extends Component {
     }
   }	
 }
-
-// Grab a reference to the current URL. If this is a web app and you are
-// using React Router, you can use `ownProps` to find the URL. Other
-// platforms (Native) or routing libraries have similar ways to find
-// the current position in the app.
+ 
 function mapStateToProps(state, ownProps) {
   return {
     isLoggedIn: state.loggedIn,

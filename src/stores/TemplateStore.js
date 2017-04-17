@@ -72,17 +72,14 @@ TemplateStore.dispatchToken = AppDispatcher.register(action => {
       TemplateStore.emitChange();
       break	
     case TemplateConstants.TEMPLATE_RECIEVE_ALL_TEMPLATES: 
-	  console.log("action.data2:" + action.data2); 
 	  setData2(action.data2); 
       TemplateStore.emitChange();
       break
     case TemplateConstants.TEMPLATE_SLIDE_RECIEVE_DATA_SINGLE: 
-	  console.log("action.data3:" + action.data3);
 	  setData3(action.data3); 
       TemplateStore.emitChange();
       break
     case TemplateConstants.TEMPLATE_RECIEVE_DATA_SINGLE:
-	  console.log("action.data1:" + action.data1);
 	  setDataSingle(action.data1); 
       TemplateStore.emitChange();
       break

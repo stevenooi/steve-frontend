@@ -9,10 +9,13 @@ const allowedEnvs = ['dev', 'dist', 'test'];
 // Set the correct environment
 let env;
 if (args._.length > 0 && args._.indexOf('start') !== -1) {
+  console.log("Build in test environment");
   env = 'test';
 } else if (args.env) {
+  console.log("Build in " + args.env + " environment");
   env = args.env;
 } else {
+  console.log("Build in dev environment");
   env = 'dev';
 }
 process.env.REACT_WEBPACK_ENV = env;

@@ -3,13 +3,13 @@ import { ListGroup } from 'react-bootstrap';
 import UserActions from '../actions/UserActions';
 import UserStore from '../stores/UserStore';
 
-import DefaultPaginationConstants from '../constants/DefaultPaginationConstants';
-import LinkComponent from '../utils/griddle/LinkComponent';
+import DefaultPaginationConstants from '../constants/DefaultPaginationConstants'; 
 import HeaderComponentInputFilter from '../utils/griddle/HeaderComponentInputFilter';
-import HeaderComponentDropDownFilter from '../utils/griddle/HeaderComponentDropDownFilter';
+
 import HeaderComponentDefault from '../utils/griddle/HeaderComponentDefault';
 import EditComponent from '../utils/griddle/EditComponent';
 import DeleteComponent from '../utils/griddle/DeleteComponent';
+import TextComponent from '../utils/griddle/TextComponent';
 
 import CustomRedirect from '../utils/CustomRedirect';
 
@@ -22,18 +22,15 @@ var columnMeta = [
   "locked": false,
   "visible": true,
   "customHeaderComponent": HeaderComponentInputFilter ,
-  "customHeaderComponentProps": {displayText : "username"}
+  "customHeaderComponentProps": {displayText : "username"},
+  "customComponent": TextComponent
   },
   { 
   "columnName": "id",
   "order": 1,
-  "customHeaderComponent": HeaderComponentDefault
-  },
-  { 
-  "columnName": "location",
-  "customHeaderComponent": HeaderComponentDropDownFilter,
-  "customHeaderComponentProps": { color: 'black' }
-  },
+  "customHeaderComponent": HeaderComponentDefault,
+  "customComponent": TextComponent 
+  }, 
   { 
   "columnName": "Edit",  
   "customHeaderComponent": HeaderComponentDefault,
@@ -66,11 +63,11 @@ class UserComponent extends Component {
     // For our initial state, we just want
     // an empty array of contacts
     this.state = {
-      data1: []
+      data1: [],
+	  noDataMessage : <div className="loader" style={{marginTop:20,marginBottom:20}}></div>	
     } 
 	
-	this.noDataMessage = <div className="loader" style={{marginTop:20,marginBottom:20}}></div>;	
-    this.onChange = this.onChange.bind(this);
+	this.onChange = this.onChange.bind(this);
     this.addClick = this.addClick.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
@@ -101,6 +98,13 @@ class UserComponent extends Component {
     this.setState({
       data1: UserStore.getData1()
     }); 
+	
+	if(UserStore.getData1() == "")
+	{ 	
+		this.setState({
+			noDataMessage: <div className="loaderNoData"><div><img src="images/nodata2.png" style={{width:50,marginLeft:8,marginTop:16,opacity:0.4}} /></div><div style={{color:'grey',marginTop:5}}>No Records</div></div>
+		});
+	}
   }
 
   render() {
@@ -112,7 +116,7 @@ class UserComponent extends Component {
     return (
 		<div>
 			<div style={{marginBottom:15}}>
-				<Griddle results={this.state.data1} resultsPerPage={DefaultPaginationConstants.RECORD_PER_PAGE} columnMetadata={columnMeta} /*showFilter={true}*/ sortable={true} noDataMessage={this.noDataMessage} handleDelete={this.handleDelete} />
+				<Griddle results={this.state.data1} resultsPerPage={DefaultPaginationConstants.RECORD_PER_PAGE} columnMetadata={columnMeta} /*showFilter={true}*/ sortable={true} noDataMessage={this.state.noDataMessage} handleDelete={this.handleDelete} />
 			</div>
 			<div>
 			<button type="button" className ="btn btn-primary" onClick={this.addClick} >Create New User</button>

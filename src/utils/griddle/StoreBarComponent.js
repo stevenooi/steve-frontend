@@ -50,42 +50,40 @@ class StoreBarComponent extends Component {
 		var previousBar5 = splitData[14];
 		var previousBar6 = splitData[15];
 		
-		var message = "Deployment not started"; 
+		var message = "New"; 
 
 		if(splitData[1] == "1")
-		{		
-			//block1 = <div style={{marginTop:-20,display:'block',backgroundColor:'#004d1a',borderRightStyle:'solid',borderColor:'white',borderWidth:'1px', width:100, borderTopLeftRadius: 3,borderBottomLeftRadius: 3}}>&nbsp;</div>;
-			//block1 =  this.addFadeInEffect(<div style={{marginTop:-20,display:'block',backgroundColor:'#004d1a',borderRightStyle:'solid',borderColor:'white',borderWidth:'1px', width:100, borderTopLeftRadius: 3,borderBottomLeftRadius: 3}}>&nbsp;</div>);
+		{		 
 			block1 = this.createBar(<div style={{marginTop:-20,display:'block',backgroundColor:'#004d1a',borderRightStyle:'solid',borderColor:'white',borderWidth:'1px', width:100, borderTopLeftRadius: 3,borderBottomLeftRadius: 3}}>&nbsp;</div>,previousBar1);
-			message = "Generating configuration ";
+			message = "Packing Food" ;
 		}
 		if(splitData[2] == "1")
 		{
 			block2 = this.createBar(<div style={{marginTop:-20,display:'block',backgroundColor:'#004d1a',borderRightStyle:'solid',borderColor:'white',borderWidth:'1px', width:100}}>&nbsp;</div>,previousBar2);
-			message = "Creating Installation Package";
+			message = "Design Package Boxes";
 		}
 		if(splitData[3] == "1")
 		{
 			block3 = this.createBar(<div style={{marginTop:-20,display:'block',backgroundColor:'#00802b',borderRightStyle:'solid',borderColor:'white',borderWidth:'1px', width:100}}>&nbsp;</div>,previousBar3);
 			
-			message = "Package Ready to Be Deployed ";
+			message = "Produce Goods ";
 			
 		}
 		if(splitData[4] == "1")
 		{
 			block4 = this.createBar(<div style={{marginTop:-20,display:'block',backgroundColor:'#009933',borderRightStyle:'solid',borderColor:'white',borderWidth:'1px', width:100}}>&nbsp;</div>,previousBar4);
-			message = "Pure Timing System Receiving Installation Package";
+			message = "Deliver To Customer";
 		}
 		if(splitData[5] == "1")
 		{
 			block5 = this.createBar(<div style={{marginTop:-20,display:'block',backgroundColor:'#00b33c',borderRightStyle:'solid',borderColor:'white',borderWidth:'1px', width:100, borderTopRightRadius: 3,borderBottomRightRadius: 3}}>&nbsp;</div>,previousBar5);
-			message = "Applying Package";
+			message = "Send Invoice";
 		}		
 
 		if(splitData[6] == "1")
 		{
 			block6 = this.createBar(<div style={{marginTop:-20,display:'block',backgroundColor:'#00b33c',borderRightStyle:'solid',borderColor:'white',borderWidth:'1px', width:100, borderTopRightRadius: 3,borderBottomRightRadius: 3}}>&nbsp;</div>,previousBar6);
-			message = "Complete";
+			message = "Progress Completion";
 		}		
 
 		if(splitData[7] != null && splitData[7] != "" && splitData[7] != "null")

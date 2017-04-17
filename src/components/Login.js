@@ -7,13 +7,15 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import AuthenticateActions from '../actions/AuthenticateActions';
 import AuthenticateStore from '../stores/AuthenticateStore';
 import { browserHistory } from 'react-router';
+import AuthenticateUtil from '../utils/general/AuthenticateUtil';
 
 function timestamp() {
   var d = new Date();
   var time = [pad(d.getHours()),
               pad(d.getMinutes()),
               pad(d.getSeconds())].join(':');
-  return d.getDate() + "-" + d.getMonth() + "-" + (d.getYear() + 1900) + " " + time;
+  return d.getTime();
+  //return d.getDate() + "-" + d.getMonth() + "-" + (d.getYear() + 1900) + " " + time;
 }
 
 function pad(n) {
@@ -32,6 +34,8 @@ constructor(props) {
     this.state ={
 		username:"",
 		password:"",
+		companyId:"",
+		companyName:"",
 		errorMsg:"",
 		loginResult: ""
     }
@@ -47,8 +51,7 @@ handleKeyPress(event)
     }
 }
 
-  onChange() {
-	  
+  onChange() { 
     this.setState({
       loginResult: AuthenticateStore.getLoginResult() 
     });   
@@ -56,13 +59,9 @@ handleKeyPress(event)
 	if(this.state.loginResult != null)
 	{ 
 		if(this.state.loginResult.responseCode == 1)
-		{
-			localStorage.setItem('username',this.state.username);
-			localStorage.setItem('logintime',timestamp());
-			localStorage.setItem('role',this.state.loginResult.roleCode);
-			localStorage.setItem('loggedIn', "YES");  
-			//redirect to home
-			browserHistory.replace("/template")
+		{ 
+			AuthenticateUtil.loginUser(this.state.username,this.state.loginResult.roleCode,this.state.loginResult.companyId,this.state.loginResult.companyName);
+			
 		}
 		else
 		{
@@ -119,10 +118,10 @@ handleKeyPress(event)
       <div style={{textAlign:'center',borderStyle:'none',borderWidth:'1px',borderColor:'#ff5050',borderRadius:'15px'}}> 
 	  <div style={{}}>
 	    <table style={{width:260,marginLeft:"calc((100% - 260px)/2 )"}}>
-		<tr><td style={{width:200,textAlign:'center',padding:25}}><img src="images/Summit_COD_Manager_Logo_Light_Large.png" alt="" style={{marginLeft:-30,width:280,textAlign:"center"}} /></td></tr> 
+		<tr><td style={{width:200,textAlign:'center',padding:25}}><img src="images/loginhead.jpg" alt="" style={{marginLeft:0,width:120,textAlign:"center"}} /></td></tr> 
 		<tr><td style={{width:200,textAlign:'center',fontSize:13,paddingBottom:15,borderLeftStyle:'none',borderWidth:'1px',borderColor:'#ff5050',borderRadius:'15px'}}><span className="glyphicon glyphicon-user" style={{paddingRight:10}}/><input type="Text" name="username" ref="username" style={{textAlign:'center',width:200,fontSize:10,height:25}} placeholder="Enter Your Username" value={this.state.username} onKeyPress={this.handleKeyPress} onChange={this.handleChange1}/></td></tr>
 		<tr><td style={{width:200,textAlign:'center',fontSize:13,paddingBottom:15,borderLeftStyle:'none',borderRightStyle:'none',borderWidth:'1px',borderColor:'#ff5050',borderRadius:'15px'}}><span className="glyphicon glyphicon-lock" style={{paddingRight:10}}/><input type="password" style={{textAlign:'center',fontSize:10,width:200,height:25}} value={this.state.password} placeholder="Enter Your Password" onKeyPress={this.handleKeyPress} onChange={this.handleChange2}/></td></tr>
-		<tr><td style={{width:200,textAlign:'center',fontSize:13,paddingBottom:15}}><input type="button" className="btn btn-danger btn-block" value="LOG IN" onClick={this.handleSubmit}/></td></tr>
+		<tr><td style={{width:200,textAlign:'center',fontSize:13,paddingBottom:15}}><input type="button" className="btn btn-primary btn-block" value="LOG IN" onClick={this.handleSubmit}/></td></tr>
 		<tr><td style={{width:200,textAlign:'center',fontSize:13}}><font color="red">{this.state.errorMsg}</font></td></tr>
 		</table>
 		</div>

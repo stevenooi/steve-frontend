@@ -1,3 +1,3 @@
 module.exports = {
-  NODE_SERVER: "https://localhost:3001",
+  NODE_SERVER: "http://localhost:3001",
 }

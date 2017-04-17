@@ -1,13 +1,14 @@
 
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import AuthenticateConstants from '../constants/AuthenticateConstants'; 
-import AuthenticateAPI from '../utils/rest/AuthenticateAPI'; 
+
+import RestUtil from '../utils/general/RestUtil';
 
 export default {
 
   login: (params) => { 
-    AuthenticateAPI
-      .postData('api/login',params)
+    RestUtil
+      .manipulateData('api/login',params)
       .then(data => { 
         AppDispatcher.dispatch({	
           actionType: AuthenticateConstants.LOGIN_USER,
@@ -21,6 +22,19 @@ export default {
         });
       });
     },
+	post: (url,params) => { 
+    //alert(new Date().toLocaleString());
+    return new Promise((resolve, reject) => {
+      request
+        .post(ApiSettings.NODE_SERVER + "/" + url)
+		.set('Content-Type', 'application/json')
+		.send(params) 
+        .end((err, response) => {
+          if (err) reject(err);
+          resolve(JSON.parse(response.text));
+        })
+    });
+  },
     /*AppDispatcher.dispatch({
           actionType: AuthenticateConstants.LOGIN_USER,
 		  username : username,

@@ -1,15 +1,15 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import ProgressConstants from '../constants/ProgressConstants';
-import ProgressAPI from '../utils/rest/ProgressAPI';
 import ReactRedirect from 'react-redirect';
 import React, { Component } from 'react'; 
 import CustomRedirect from '../utils/CustomRedirect';
+import RestUtil from '../utils/general/RestUtil';
 
 export default {
  
   getData1: () => {
-    ProgressAPI
-      .getData('api/progress')
+    RestUtil
+      .receiveDataPost('api/progress')
       .then(data => {
         AppDispatcher.dispatch({	
           actionType: ProgressConstants.PROGRESS_RECIEVE_DATA,
@@ -22,10 +22,10 @@ export default {
           message: message
         });
       });
-  },
+    },
     getAllActiveTemplates: () => {
-    ProgressAPI
-      .getData('api/templateactive')
+    RestUtil
+      .receiveDataPost('api/templateactive')
       .then(data => {
         AppDispatcher.dispatch({	
           actionType: ProgressConstants.PROGRESS_RECIEVE_DATA_ALL_TEMPLATES,
@@ -40,7 +40,7 @@ export default {
       });
   },
   updateData: (params) => {
-    ProgressAPI
+    RestUtil
       .manipulateData('api/updateprogress',params)
       .then(data => {   
 	  CustomRedirect.redirect("/progress"); 

@@ -4,7 +4,6 @@ import UserActions from '../actions/UserActions';
 import UserStore from '../stores/UserStore';
 import ApiSettings from '../config/apiSettings';
 
-import CustomDropDown from '../utils/CustomDropDown';
 
 class UserFormComponent extends Component {
 
@@ -18,7 +17,7 @@ class UserFormComponent extends Component {
       roleId: "",
       conPassword: "",
       data1: [],
-      allBrandData: []
+      allCompanyData: []
     } 
 	this.params = {};
 	//this.dataId = this.props.location.query.id;
@@ -39,30 +38,17 @@ class UserFormComponent extends Component {
     this.setState({
       data1: UserStore.getDataSingle(),
       dataRoles: UserStore.getDataRoles(),
-	  allBrandData: UserStore.getAllBrands()
+	  allCompanyData: UserStore.getAllCompany()
     }); 
 	
 	if(this.state.data1 != null && this.state.data1[0] != null)
     {
 		this.setState({
-			userName: this.state.data1[0].userid,
-			roleId: this.state.data1[0].roleId 
+			userName: this.state.data1[0].userid, 
 		});
-	}		
-	else
-	{
-		this.setState({ 
-			roleId: this.state.dataRoles[0].id
-		});
-	}
+	}		 
 	
-	//set default dropdown value to first data if no data is available
-	if(this.state.allBrandData != null && this.state.data1 != null && this.state.allBrandData[0] != null && this.state.data1[0] == null)
-	{
-		this.setState({
-		  brandId: this.state.allBrandData[0].id 
-		}); 
-	}	
+	 
   }
 
   componentWillMount() { 
@@ -75,9 +61,7 @@ class UserFormComponent extends Component {
 		UserActions.getDataById(this.props.location.query.id); 
 		this.refs["divPassword"].style.display='none';
 		this.refs["divConPassword"].style.display='none';
-	}
-	UserActions.getAllRoles(); 
-	UserActions.getAllBrands(); 
+	} 
   }
 
   componentWillUnmount() { 
@@ -120,11 +104,7 @@ class UserFormComponent extends Component {
 		validationMessage +='Username cannot be empty\n';
 		result = false;
 	} 
-	else if(!this.validateEmail(this.state.userName))
-	{
-		validationMessage +='Username has to be in email format. eg : johndoe@johnwebsite.com\n';
-		result = false;
-	}
+	
 	if(this.props.location.query.id == "" || this.props.location.query.id == null)
 	{
 		if(this.state.password == "" || this.state.password == null)
@@ -159,16 +139,16 @@ class UserFormComponent extends Component {
 	this.setState({roleId: event.target.value});
   } 
   handleChange5(event) { 
-	this.setState({brandId: event.target.value});
+	this.setState({companyId: event.target.value});
   }
 
   handleClick1(event) {
 	  
 	if(this.validateForm()){
 		this.addParams("userid",this.state.userName); 
-		this.addParams("roleid",this.state.roleId);  
-		this.addParams("brandid",this.state.brandId); 
-		if(this.state.data1[0] != null && this.state.data1[0].id != null && this.state.data1[0].id != "")
+		this.addParams("roleid","1");  
+		this.addParams("companyid","1"); 
+		if(this.state.data1 != null && this.state.data1[0] != null && this.state.data1[0].id != null && this.state.data1[0].id != "")
 		{  
 			this.addParams("id",this.state.data1[0].id);  
 			UserActions.editData(JSON.parse(JSON.stringify(this.params)));
@@ -200,7 +180,7 @@ class UserFormComponent extends Component {
 			  </div>
 		  ) :  ""}
 		  <div>
-			  <label >Username ( Email Format ) : </label>
+			  <label >Username : </label>
 			  <input type="text" className="form-control" id="name" placeholder="Enter name" onChange={this.handleChange1} value={this.state.userName} />
 		  </div>
 		  <div ref="divPassword">
@@ -210,15 +190,7 @@ class UserFormComponent extends Component {
 		  <div ref="divConPassword">
 			  <label >Confirm Password:</label>
 			  <input type="password" className="form-control" id="conpassword" placeholder="Confirm password" onChange={this.handleChange3} value={this.state.conPassword} />
-		  </div>
-		  <div>
-			  <label >Role:</label>
-			  <CustomDropDown data={this.state.dataRoles} currentValue={this.state.roleId} customKey="id" customDescription="name" onChange={this.handleChange4}/>
-		  </div>
-		  <div>
-			  <label >Brand:</label>
-			  <CustomDropDown data={this.state.allBrandData} currentValue={this.state.brandId} customKey="id" customDescription="name" onChange={this.handleChange5}/>
-		  </div>
+		  </div> 
 	</div>   
 		 
 		<input type="button" className="btn btn-primary" value="Submit" onClick={this.handleClick1} />

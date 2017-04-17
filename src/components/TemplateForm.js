@@ -2,17 +2,12 @@ import React, { Component } from 'react';
 import { ListGroup ,DropdownButton, MenuItem, Grid, Row, Col} from 'react-bootstrap'; 
 import TemplateActions from '../actions/TemplateActions';
 import TemplateStore from '../stores/TemplateStore';
-import ApiSettings from '../config/apiSettings';
-import CustomDropDown from '../utils/CustomDropDown';
-import CustomDropZone from '../utils/CustomDropZone';
-import CustomDropZoneMultiple from '../utils/CustomDropZoneMultiple';
+import ApiSettings from '../config/apiSettings'; 
+import CustomDropZone from '../utils/CustomDropZone'; 
 
 import Modal from 'react-modal';
-import CustomModal from '../utils/CustomModal';
-import CustomModalSlider from '../utils/CustomModalSlider';
-import CustomModalOrderScreen from '../utils/CustomModalOrderScreen';
+import CustomModal from '../utils/CustomModal';  
 
-import TemplateKeyConstants from '../constants/TemplateKeyConstants';
   
 class TemplateFormComponent extends Component {
 
@@ -47,9 +42,7 @@ class TemplateFormComponent extends Component {
     this.handleClick1 = this.handleClick1.bind(this);
     this.handleClick2 = this.handleClick2.bind(this);
     this.handleClickReset = this.handleClickReset.bind(this);
-    this.handleUpload = this.handleUpload.bind(this);
-    this.handleUpload2 = this.handleUpload2.bind(this);
-    this.test = this.test.bind(this);
+    this.handleUpload = this.handleUpload.bind(this); 
   }
 
   handleClickReset()
@@ -74,26 +67,7 @@ class TemplateFormComponent extends Component {
 	  this.setState(obj);
 	  console.log("handleUpload():" + val);
   }
-  
-  handleUpload2(val)
-  {
-	  console.log("handleUpload2():" + val);
-	  //console.log("dropZoneMultiple:" + this.refs.dropZoneMultiple.state.imageFilesMultiple);
-	  this.setState({
-       // slideImg: this.refs.dropZoneMultiple.state.imageFilesMultiple 
-		slideImg: val
-      });   	
-	//  alert("this.state.slideImg:" + this.state.slideImg);
-	  //this.state.slideImg[this.state.slideImg.length] = val;
-	 
-		
-	 /* var splitData = val.split("#"); 
-	  var obj = {};
-	  obj[splitData[0]] = splitData[1];
-	  this.setState(obj);
-	  console.log("handleUpload():" + val);*/
-  }
-  
+   
   onChange() {
     this.setState({
       data1: TemplateStore.getDataSingle(), 
@@ -197,11 +171,6 @@ class TemplateFormComponent extends Component {
 	return true;
   }
   
-  test()
-  {
-	  console.log("test clicked");
-  }
-  
   handleChange1(event) { 
 	this.setState({templateName: event.target.value});
   }
@@ -219,114 +188,14 @@ class TemplateFormComponent extends Component {
   }
 
   validateForm()
-  {
-	var validationMessage = "";
-	var result = true;
-	 
-	if(this.state.templateName == "" || this.state.templateName == null)
-	{
-		validationMessage +='Name cannot be empty\n';
-		result = false;
-	}
-	if(this.state.templateDescription == "" || this.state.templateDescription == null)
-	{
-		validationMessage +='Description cannot be empty\n';
-		result = false;
-	}
-	if(this.state.welcome == "" || this.state.welcome == null)
-	{
-		validationMessage +='Welcome image cannot be empty\n';
-		result = false;
-	}
-	if(this.state.thankyou == "" || this.state.thankyou == null)
-	{
-		validationMessage += 'Thank you image cannot be empty\n';
-		result = false;
-	}
-	if(this.state.logo == "" || this.state.logo == null)
-	{
-		validationMessage += 'Logo image cannot be empty\n';
-		result = false;
-	}
-	if(this.state.default1 == "" || this.state.default1 == null)
-	{
-		validationMessage += 'Default 1 image cannot be empty\n';
-		result = false;
-	}
-	if(this.state.default2 == "" || this.state.default2 == null)
-	{
-		validationMessage += 'Default 2 image cannot be empty\n';
-		result = false;
-	}
-	if(this.state.slideImg == "" || this.state.slideImg == null)
-	{
-		validationMessage += 'Slide images has to be at least 2 pictures\n';
-		result = false;
-	}
-	if(this.state.slideImg != "" && this.state.slideImg != null && this.state.slideImg.length < 2)
-	{
-		validationMessage += 'Slide images has to be at least 2 pictures\n';
-		result = false;
-	} 
-	
-	if(result == false)
-		alert(validationMessage);
-	
-	return result;
+  { 
+	return true;
   }
   
   handleClick1(event) {   
-  
-	console.log("slideImg:" + JSON.stringify(this.state.slideImg));
-	
-	 if(this.validateForm()){
-			this.addParams("name",this.state.templateName);
-			this.addParams("description",this.state.templateDescription);
-			//this.addParams("rmsData",dataObj);
-			this.addParams("welcome",this.state.welcome);
-			this.addParams("thankyou",this.state.thankyou);
-			this.addParams("logo",this.state.logo);
-			this.addParams("default1",this.state.default1);
-			this.addParams("default2",this.state.default2);
-			this.addParams("slideImg",this.state.slideImg);
-			this.addParams("status",TemplateKeyConstants.ACTIVE);
-			
-			if(this.props.location.query.id != null)
-			{   
-				this.addParams("id",this.state.data1[0].id); 
-				//alert("Edit function is not available yet ! ");
-				TemplateActions.editData(JSON.parse(JSON.stringify(this.params)));
-			}
-			else
-			{ 
-				TemplateActions.addData(JSON.parse(JSON.stringify(this.params)));
-			} 
-	 } 
-	 
   }
   
-  handleClick2(event) {   
-	 		this.addParams("name",this.state.templateName);
-			this.addParams("description",this.state.templateDescription);
-			//this.addParams("rmsData",dataObj);
-			this.addParams("welcome",this.state.welcome);
-			this.addParams("thankyou",this.state.thankyou);
-			this.addParams("logo",this.state.logo);
-			this.addParams("default1",this.state.default1);
-			this.addParams("default2",this.state.default2);
-			this.addParams("slideImg",this.state.slideImg);
-			this.addParams("status",TemplateKeyConstants.IN_PROGRESS);
-			
-			if(this.props.location.query.id != null)
-			{  
-				this.addParams("id",this.state.data1[0].id); 
-				//alert("Edit function is not available yet ! ");
-				TemplateActions.editData(JSON.parse(JSON.stringify(this.params)));
-			}
-			else
-			{
-				TemplateActions.addData(JSON.parse(JSON.stringify(this.params)));
-			} 
+  handleClick2(event) {    
   }
   
   addParams(fieldName,value) {
@@ -335,27 +204,15 @@ class TemplateFormComponent extends Component {
 
   render() { 
 
-  let headerTitle = "";
-  let buttonList = "";
-  if(this.props.location.query.viewid == null || this.props.location.query.viewid == "")
-  {
-	buttonList = <div><input type="button" className="btn btn-primary" value="Activate" onClick={this.handleClick1} /><input type="button" className="btn btn-primary" style={{marginLeft:20}} value="Save" onClick={this.handleClick2} /></div>;
-  }
-  if(this.props.location.query.id != null)
-  {
-	  headerTitle = "Update Template Details";
-  }
-  else if(this.props.location.query.viewid != null)
-  {
-	  headerTitle = "View Template Details";
-  }
-  else
-  { 
-	  headerTitle = "Create New Template";
-  }
-
+	let headerTitle = "";
+	let buttonList = "";
+	
+	buttonList = <div><input type="button" className="btn btn-danger" style={{marginLeft:20}} value="Save" onClick={this.handleClick2} /></div>;
+	
+	headerTitle = "Upload Image";
+	
     return (
-	<div >
+	<div>
 		
 		<Grid style={{marginBottom:20}}> 
 		<Row>
@@ -373,67 +230,16 @@ class TemplateFormComponent extends Component {
 				</div>
 			  </div>
 		  ) :  ""}
-		  </Row>
-		  <Row style={{marginBottom:15}}>
-		  <div> 
-			  <label >Name:</label>
-			  <input type="text" className="form-control" id="name" placeholder="Enter name" onChange={this.handleChange1} value={this.state.templateName} />
-		  </div>
-		  </Row>
-		  <Row style={{marginBottom:15}}>
-		  <div>
-			  <label >Description:</label>
-			  <input type="text" className="form-control" id="description" placeholder="Enter description" onChange={this.handleChange2} value={this.state.templateDescription} />
-		  </div>
 		  </Row>  
-			<Row style={{marginBottom:15}}>
+		  <Row style={{marginBottom:15}}>
 				<Col xs={3} >
-					<label >Welcome: </label>
-					<CustomDropZone picId="welcome" disabled={this.props.location.query.viewid} onHandleUpload={this.handleUpload} defaultImg={this.state.welcome}/>
-					<CustomModal img={this.state.welcome} title="Welcome" />
-				</Col>
-				
-				<Col xs={3}>
-					<label >Thank You:</label>
-					<CustomDropZone picId="thankyou" disabled={this.props.location.query.viewid} onHandleUpload={this.handleUpload} defaultImg={this.state.thankyou}/>
-					<CustomModal img={this.state.thankyou} title="Thank You" />
-				</Col>
-				
-				<Col xs={3}>
-					<label >Logo:</label>
-					<CustomDropZone picId="logo" disabled={this.props.location.query.viewid} onHandleUpload={this.handleUpload} defaultImg={this.state.logo}/>
-					<CustomModal img={this.state.logo} title="Logo" />
-				</Col>
-				 
-			</Row>
-			<Row style={{marginBottom:15}}>
-				<Col xs={3}>
-					<label >Default 1:</label>
-					<CustomDropZone picId="default1" disabled={this.props.location.query.viewid} onHandleUpload={this.handleUpload} defaultImg={this.state.default1}/>
-					<CustomModal img={this.state.default1} title="Default 1" />
-				</Col>
-				<Col xs={3}>				
-					<label >Default 2:</label>
-					<CustomDropZone picId="default2" disabled={this.props.location.query.viewid} onHandleUpload={this.handleUpload} defaultImg={this.state.default2}/>
-					<CustomModal img={this.state.default2} title="Default 2" />
-				</Col>
-				<Col xs={3}>
-					<label >Order Screen: (Non-Editable)</label>
-					<CustomModalOrderScreen imgLogo={this.state.logo} imgWelcome={this.state.default1} imgThankYou={this.state.default2} title="Order Screen" />
+					<label >Image: </label>
+					<CustomDropZone picId="welcome" onHandleUpload={this.handleUpload} defaultImg={this.state.welcome}/>
+					<CustomModal img={this.state.welcome} title="Image 1" />
 				</Col>
 			</Row>
-			<Row style={{marginBottom:15}}>
-				<label >Slides Images:</label>
-				<CustomDropZoneMultiple ref="dropZoneMultiple" disabled={this.props.location.query.viewid} onHandleUpload={this.handleUpload2} defaultImg={this.state.data3} newDataToken={(this.props.location.query.id == null && this.props.location.query.cloneid == null && this.props.location.query.viewid == null)} />
-				<CustomModalSlider img={this.state.slideImg} title="Default 1" />
-			</Row>
-			<Row>
+		</div>
 			
-			{buttonList}
-			</Row>
-			
-			</div>   	
-		
 	  </form>
 		</Grid> 
 

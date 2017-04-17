@@ -6,7 +6,7 @@ class SidebarComponent extends Component {
   render() {
     return (
 	  <div className="container-fluid">
-        <Menu />
+        <Menu currentURL={this.props.location.pathname} />
 	  </div>
     );
   }

@@ -1,15 +1,14 @@
-
-//import AuthActions from '../actions/AuthActions';
-import AuthStore from '../stores/AuthStore';
+ 
 
 import React, { Component } from 'react';
 import { Nav, Navbar, NavItem, Header, Brand } from 'react-bootstrap';
-// import AuthActions from '../actions/AuthActions';
-// import AuthStore from '../stores/AuthStore';
+
+import HeaderActions from '../actions/HeaderActions';
+import HeaderStore from '../stores/HeaderStore';
 
 import { browserHistory } from 'react-router';
-import { Grid, Row, Col } from 'react-bootstrap';
-
+import { Grid, Row, Col } from 'react-bootstrap'; 
+ 
 function columnCapitalize(data)
 { 
 	return data.replace(/\b\w/g, l => l.toUpperCase());
@@ -24,8 +23,28 @@ class HeaderComponent extends Component {
     }
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
+    this.onChange = this.onChange.bind(this);
 	this.changePasswordClick = this.changePasswordClick.bind(this);
+    this.handleChange1 = this.handleChange1.bind(this);
 	//checkLoginState();
+  }
+  
+  componentDidMount() { 
+  }
+  componentWillMount() {
+    HeaderStore.addChangeListener(this.onChange);
+  }
+  
+  handleChange1(event) { 
+	this.setState({companyId: event.target.value});
+	 
+	  if(event.target.value.toLowerCase() == "all") 
+		localStorage.setItem('companyid','%');
+	  else	
+		localStorage.setItem('companyid',event.target.value);
+	 
+	window.location.reload();
+	//browserHistory.replace(this.props.location.pathname);   
   }
   
   login() { 
@@ -39,13 +58,39 @@ class HeaderComponent extends Component {
   }
 
   changePasswordClick()
-  {
-	  
+  {   
 	browserHistory.replace("/changePassword");
 	  //alert('Change password function not available yet!' );
   }
   
-
+  onChange() {
+  
+    var tempData1 = HeaderStore.getData1(); 
+	var obj = {};
+	obj.id = "All";
+	obj.name = "All";
+	tempData1.push(obj);
+    this.setState({
+      data1: tempData1
+    });  
+	 
+	//if(this.state.data1 != null)
+	if(localStorage.getItem('companyid') == null)
+	{
+		this.setState({
+		  companyId: "All"
+		});  
+	}
+	else
+	{
+		this.setState({
+		  companyId: localStorage.getItem('companyid')
+		});  
+	}
+	
+	//alert(JSON.stringify(HeaderStore.getData1()));
+  }
+  
   render() {
 	  
   let loginLogout = null;
@@ -66,37 +111,40 @@ class HeaderComponent extends Component {
 		borderBottomWidth: 0,
 		minWidth: 500,
 	};
-	
-	//let utilBar = <div><span className="i4header_userinfo"  style={{display:'inline'}}>Client: <b> {localStorage.getItem('username')} </b>&nbsp;&nbsp;|&nbsp;&nbsp;</span><a href="#" onClick={this.changePasswordClick}>Change Password</a>&nbsp;<div>		
-    //let logoutButton = <button type="button" style={{display:"inline",textAlign:'left'}} className="btn btn-primary" onClick={this.logout}>Logout</button>;
+	 
 	let utilBar;
 	let logoutButton;
+	let companySelection; 
 	let logo;
 	if(localStorage.getItem('loggedIn') == "YES")
 	{
 		logo=(<div style={{width: "100%",paddingTop:5,paddingBottom:5,textAlign:"left" }}>
-					<div style={{display:'inline'}}><img src="images/Summit_COD_Manager_Logo_Light_Large.png" alt="" style={{width:200,marginLeft:-20,display: "block",textAlign:"left"}} /></div>
+					<div style={{display:'inline',fontSize:25,fontFamily:'Arial'}}>
+					Steven Ooi Demo
+					</div>
 					<div style={{display:'inline'}}>
 					</div>								
 				</div>);
-		utilBar = <div style={{width:'100%'}}><span className="i4header_userinfo"  style={{display:'inline'}}>Client: <b> Hungry Jack </b>&nbsp;&nbsp;|&nbsp;&nbsp;</span><span className="i4header_userinfo"  style={{display:'inline'}}>Username: <b> {localStorage.getItem('username')} </b>&nbsp;&nbsp;|&nbsp;&nbsp;</span><a href="#" onClick={this.changePasswordClick}>Change Password</a>&nbsp;</div>;		
-        logoutButton = <div ><button type="button" style={{display:"inline",textAlign:'left'}} className="btn btn-primary" onClick={this.logout}>Logout</button></div>;
+	 		
+		utilBar = <div style={{width:'100%'}}><span style={{fontSize:12,fontFamily:'Arial',display:'inline'}}>Username: <b> {localStorage.getItem('username')} </b></span></div>;		
+        logoutButton = <div><button type="button" style={{display:"inline",textAlign:'left'}} className="btn btn-primary" onClick={this.logout}>Logout</button></div>;
 	}
+	
 	return (
 	
-	  <div className="container-fluid" >
+	  <div className="container-fluid" > 
         <Grid >
           <Row >
-			<Col xs={5} style={{minWidth:230, width:'40%'}}>
+			<Col xs={3} style={{minWidth:230, width:'38%'}}>
 				{logo}
+			</Col> 
+			<Col xs={3} style={{fontSize:12,paddingTop:16, width:'51%',textAlign:'right'}}>
+				 {utilBar}		
 			</Col>
-			<Col xs={4} style={{fontSize:12,minWidth:280,paddingLeft:20,paddingTop:16, width:'49%',textAlign:'right'}}>
-				{utilBar}		
-			</Col>
-			<Col xs={2}  style={{minWidth:50,paddingLeft:20,paddingTop:8,paddingBottom:8, width:'10%',textAlign:'left'}}>
+			<Col xs={1}  style={{minWidth:50,paddingTop:8,paddingBottom:8, width:'10%',textAlign:'left'}}>
 				{logoutButton}
 			</Col>
-		</Row>
+		  </Row>
         </Grid> 
 	</div>
 	);

@@ -14,8 +14,8 @@ class AppComponent extends Component {
   render() {
     return (
       <div>
-        <Header></Header>
-              <Topbar />
+        <Header location={this.props.location} ></Header>
+              <Topbar location={this.props.location} />
         <Grid >
           <Row >
 		  </Row>

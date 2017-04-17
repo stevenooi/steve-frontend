@@ -8,10 +8,10 @@ const CHANGE_EVENT = 'change';
 let _data1 = [];  
 let _dataRoles = [];  
 let _dataSingle = [];  
-let _allBrandData = [];
+let _allCompanyData = [];
 
-function setAllBrandData(data) {
-  _allBrandData = data;
+function setAllCompanyData(data) {
+  _allCompanyData = data;
 }
 
 function setData1(data) {
@@ -55,8 +55,8 @@ class UserStoreClass extends EventEmitter {
     return _dataSingle;
   }  
   
-  getAllBrands () {
-    return _allBrandData;
+  getAllCompany () {
+    return _allCompanyData;
   }  
   //End Set the return variables
 
@@ -77,14 +77,12 @@ UserStore.dispatchToken = AppDispatcher.register(action => {
       break
 	  
     case UserConstants.USER_RECIEVE_DATA_SINGLE:
-	console.log("action.data1:" + action.data1);
 	  setDataSingle(action.data1);
       UserStore.emitChange();
       break
     
-	case UserConstants.USER_RECIEVE_DATA_ALL_BRAND:
-	  console.log("action.data1:" + action.allBrandData);
-	  setAllBrandData(action.allBrandData); 
+	case UserConstants.USER_RECIEVE_DATA_ALL_COMPANY: 
+	  setAllCompanyData(action.allCompanyData); 
       UserStore.emitChange();
       break
  

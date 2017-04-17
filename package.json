@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --host 0.0.0.0 --port 80",
-    "clean": "rmdir dist /s /Q",
-    "build_prod": "cfg\\configure_prod && npm run clean && webpack && cfg\\command",
+    "clean": "rmdir dist /s /Q", 
+    "build_prod": "cfg\\configure_prod && npm run clean && webpack --env dist && cfg\\command ",
     "build_local": "cfg\\configure_local && npm run clean && webpack && cfg\\command ",
     "prod": "npm run build_prod ",
     "local": "npm run build_local "

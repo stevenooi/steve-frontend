@@ -1,16 +1,15 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import UserConstants from '../constants/UserConstants';
-import UserAPI from '../utils/rest/UserAPI';
-import RoleAPI from '../utils/rest/RoleAPI';
 import ReactRedirect from 'react-redirect';
 import React, { Component } from 'react'; 
 import CustomRedirect from '../utils/CustomRedirect';
+import RestUtil from '../utils/general/RestUtil';
 
 export default {
  
   getData1: () => {
-    UserAPI
-      .getData('api/user')
+    RestUtil
+      .receiveDataPost('api/user')
       .then(data => {
         AppDispatcher.dispatch({	
           actionType: UserConstants.USER_RECIEVE_DATA,
@@ -25,7 +24,7 @@ export default {
       });
   },
   updatePassword: (params) => {
-    UserAPI
+    RestUtil
       .manipulateData('api/updatePassword',params)
       .then(CustomRedirect.redirect("/template"))
       .catch(message => {
@@ -35,13 +34,13 @@ export default {
         });
       });
   },
-  getAllBrands: () => {
-    UserAPI
-      .getData('api/brand')
+  getAllCompany: () => {
+    RestUtil
+      .getData('api/company')
       .then(data => {
         AppDispatcher.dispatch({	
-          actionType: UserConstants.USER_RECIEVE_DATA_ALL_BRAND,
-          allBrandData: data
+          actionType: UserConstants.USER_RECIEVE_DATA_ALL_COMPANY,
+          allCompanyData: data
         });
       })
       .catch(message => {
@@ -52,7 +51,7 @@ export default {
       });
   },
    addData: (params) => {
-    UserAPI
+    RestUtil
       .manipulateData('api/adduser',params)
       .then(data => {   
 	  CustomRedirect.redirect("/user"); 
@@ -69,7 +68,7 @@ export default {
       });
   },
   getDataById: (params) => {
-	UserAPI
+	RestUtil
       .getDataById('api/user',params)
       .then(data => { 
         AppDispatcher.dispatch({	
@@ -85,7 +84,7 @@ export default {
       });
   },
   editData: (params) => {
-    UserAPI
+    RestUtil
       .manipulateData('api/edituser',params)
       .then(data => {  
 	  CustomRedirect.redirect("/user");
@@ -102,8 +101,8 @@ export default {
       });
   }, 
   getAllRoles: () => {
-    UserAPI
-      .getData('api/role')
+    RestUtil
+      .receiveDataPost('api/role')
       .then(data => {
         AppDispatcher.dispatch({	
           actionType: UserConstants.USER_RECIEVE_DATA_ROLES,

@@ -116,7 +116,7 @@ export default class CustomModal extends Component {
 		
         return (
             <section>
-	<a href="#" className="btn btn-info	" style={{width:200,textAlign:"left",padding:0,spacing:0}} onClick={this.openModal}><span className="glyphicon glyphicon-search" style={{borderRightStyle:"solid",borderRightWidth:"1px",height:30,marginTop:-1,paddingLeft:15,paddingTop:7,left:0,width:45}}></span> <div style={{display:"inline",marginLeft:45}}>Preview</div></a>
+	<a href="#" className="btn btn-primary	" style={{width:200,textAlign:"left",padding:0,spacing:0}} onClick={this.openModal}><span className="glyphicon glyphicon-search" style={{borderRightStyle:"solid",borderRightWidth:"1px",height:30,marginTop:-1,paddingLeft:15,paddingTop:7,left:0,width:45}}></span> <div style={{display:"inline",marginLeft:45}}>Preview</div></a>
    
 					<Modal bsSize="large" 
 					isOpen={this.isOpen}
@@ -125,7 +125,7 @@ export default class CustomModal extends Component {
 					style={style} 
 					> 	
 						<div className="modal-body" style={{textAlign:"center",top:10}}>
-							<img ref='content'src={this.state.img} style={{height:this.windowHeight ,top:0,marginTop:0,marginBottom:0}} /> 
+							<img ref='content' src={this.state.img} style={{height:this.windowHeight ,top:0,marginTop:0,marginBottom:0}} /> 
 						</div>
 						 
 						<img src="../images/erroricon.png" style={{width:25,cursor:'pointer',position:'absolute',left:5,top:5}} onClick={this.closeModal} />  
